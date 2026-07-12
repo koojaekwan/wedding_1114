@@ -552,16 +552,6 @@
 </head>
 
 <body>
-<!-- 페이지를 열면 가장 먼저 화면 전체를 덮는 인트로 화면 -->
-<!-- <div id="intro-overlay">
-<div class="intro-box">
-    <p class="intro-title">WELCOME</p>
-    <p class="intro-subtitle">소중한 분들을 초대합니다</p>
-    <button id="entry-btn" class="entry-button">초대장 열기 ✉️</button>
-</div>
-</div> -->
-
-
 <!-- ======================================================= -->
 <!-- 3. 자바스크립트 (오류 추적용 안내창 장착) -->
 <!-- ======================================================= -->
@@ -579,12 +569,7 @@
     //   return; 
     // }
 
-    // ✉️ 초대장 열기 버튼 클릭 시
-    // entryBtn.addEventListener('click', function() {
-    // 1. 대문 화면 사라지게 하기
-    // introOverlay.classList.add('fade-out');
-
-    // 2. 음악 재생 시도
+    // 음악 재생 시도
     bgm.play()
     .then(() => {
         musicBtn.classList.add('playing');
@@ -592,9 +577,8 @@
     })
     .catch(err => {
         console.log("재생 실패원인:", err);
-        alert("브라우저가 음악 재생을 차단했거나 파일 경로가 잘못되었습니다.");
+        alert("음악 자동 재생 err → 수동으로 재생해주세요.");
     });
-    // });
 
     // 🎵 우측 하단 고정 버튼 클릭 시 (재생/일시정지 토글)
     musicBtn.addEventListener('click', function(e) {
