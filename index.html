@@ -470,10 +470,125 @@
         }
 
 
+        /* 화면 전체를 흐릿하고 고급스럽게 덮는 레이아웃 */
+        #intro-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.98); /* 배경색 (약간 투명한 흰색) */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000; /* 최상단에 위치 */
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        /* 인트로 박스 */
+        .intro-box {
+        text-align: center;
+        font-family: sans-serif;
+        }
+
+        .intro-title {
+        font-size: 28px;
+        letter-spacing: 4px;
+        color: #a67c70;
+        font-weight: bold;
+        margin-bottom: 5px;
+        }
+
+        .intro-subtitle {
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 30px;
+        }
+
+        /* 입장 버튼 */
+        .entry-button {
+        padding: 15px 40px;
+        font-size: 15px;
+        background-color: #a67c70;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(166, 124, 112, 0.3);
+        transition: all 0.2s ease;
+        }
+
+        .entry-button:hover {
+        background-color: #8e655a;
+        transform: translateY(-2px);
+        }
+
+        /* 버튼을 누르면 인트로 화면이 사라지게 하는 클래스 */
+        #intro-overlay.fade-out {
+        opacity: 0;
+        visibility: hidden;
+        }
     </style>
 </head>
-<body>
 
+<body><!-- 페이지를 열면 가장 먼저 화면 전체를 덮는 인트로 화면 -->
+<div id="intro-overlay">
+<div class="intro-box">
+    <p class="intro-title">WELCOME</p>
+    <p class="intro-subtitle">소중한 분들을 초대합니다</p>
+    <button id="entry-btn" class="entry-button">초대장 열기 ✉️</button>
+</div>
+</div>
+
+<!-- ======================================================= -->
+<!-- 3. 자바스크립트 (오류 추적용 안내창 장착) -->
+<!-- ======================================================= -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const bgm = document.getElementById('my-bgm');
+    const musicBtn = document.getElementById('music-toggle-btn');
+    const musicIcon = document.getElementById('music-btn-icon');
+    const introOverlay = document.getElementById('intro-overlay');
+    const entryBtn = document.getElementById('entry-btn');
+
+    // 🔍 어디서 파업이 났는지 잡아내는 추적 장치
+    if (!bgm || !musicBtn || !introOverlay || !entryBtn) {
+      alert("코드 내에 빠진 태그가 있습니다! [오디오: " + !!bgm + ", 음악버튼: " + !!musicBtn + ", 대문: " + !!introOverlay + ", 입장버튼: " + !!entryBtn + "]");
+      return; 
+    }
+
+    // ✉️ 초대장 열기 버튼 클릭 시
+    entryBtn.addEventListener('click', function() {
+      // 1. 대문 화면 사라지게 하기
+      introOverlay.classList.add('fade-out');
+
+      // 2. 음악 재생 시도
+      bgm.play()
+        .then(() => {
+          musicBtn.classList.add('playing');
+          musicIcon.textContent = '⏸️';
+        })
+        .catch(err => {
+          console.log("재생 실패원인:", err);
+          alert("브라우저가 음악 재생을 차단했거나 파일 경로가 잘못되었습니다.");
+        });
+    });
+
+    // 🎵 우측 하단 고정 버튼 클릭 시 (재생/일시정지 토글)
+    musicBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (bgm.paused) {
+        bgm.play();
+        musicBtn.classList.add('playing');
+        musicIcon.textContent = '⏸️';
+      } else {
+        bgm.pause();
+        musicBtn.classList.remove('playing');
+        musicIcon.textContent = '🎵';
+      }
+    });
+  });
+</script>
 
 <!-- 화면 우측 하단에 고정될 음악 버튼 -->
 <button id="music-toggle-btn" class="music-floating-btn">
@@ -487,57 +602,44 @@
 <!-- [4] 자바스크립트 -->
 <!-- [4] 자바스크립트 (첫 터치 시 자동 재생 및 토글 제어) -->
 <script>
-  (function() {
+    (function() {
     const bgm = document.getElementById('my-bgm');
     const musicBtn = document.getElementById('music-toggle-btn');
     const musicIcon = document.getElementById('music-btn-icon');
+    
+    const introOverlay = document.getElementById('intro-overlay');
+    const entryBtn = document.getElementById('entry-btn');
 
-    if (!bgm || !musicBtn) return;
+    if (!bgm || !musicBtn || !entryBtn) return;
 
-    // 음악을 재생시키는 함수
-    function playAudio() {
-      if (bgm.paused) {
+    // [핵심] 초대장 열기 버튼을 누르면 실행되는 기능
+    entryBtn.addEventListener('click', function() {
+        // 1. 대문 화면 부드럽게 지우기
+        introOverlay.classList.add('fade-out');
+
+        // 2. 음악 즉시 재생 (사용자 클릭 직후라 100% 성공)
         bgm.play()
-          .then(() => {
+        .then(() => {
             musicBtn.classList.add('playing');
             musicIcon.textContent = '⏸️';
-            // 성공적으로 재생되면 더 이상 화면 클릭 감지를 하지 않음
-            removeInteraction();
-          })
-          .catch(err => {
-            console.log("자동 재생 차단됨 (사용자 반응 대기 중)");
-          });
-      }
-    }
+        })
+        .catch(err => console.log("재생 실패:", err));
+    });
 
-    // 화면 클릭/터치 시 재생되도록 이벤트 등록
-    function removeInteraction() {
-      document.removeEventListener('click', playAudio);
-      document.removeEventListener('touchstart', playAudio);
-    }
-    document.addEventListener('click', playAudio);
-    document.addEventListener('touchstart', playAudio);
-
-    // 페이지 로드 시 브라우저가 허용하면 바로 재생 시도
-    window.addEventListener('load', playAudio);
-
-    // 음악 재생/정지 버튼 직접 클릭 시
+    // 우측 하단 고정 음악 버튼 토글 기능 (재생/정지)
     musicBtn.addEventListener('click', function(e) {
-      e.stopPropagation(); // 화면 전체 클릭 이벤트가 중복 작동하는 것을 방지
-      
-      if (bgm.paused) {
+        e.stopPropagation();
+        if (bgm.paused) {
         bgm.play();
         musicBtn.classList.add('playing');
         musicIcon.textContent = '⏸️';
-        removeInteraction(); // 사용자가 수동으로 켰으므로 자동 재생 감지 해제
-      } else {
+        } else {
         bgm.pause();
         musicBtn.classList.remove('playing');
         musicIcon.textContent = '🎵';
-        removeInteraction(); // 사용자가 수동으로 껐으므로 다시 켜지지 않도록 차단
-      }
+        }
     });
-  })();
+    })();
 </script>
 
 
