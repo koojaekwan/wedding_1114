@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>저희 두 사람, 결혼합니다 🤍</title>
+    
+    <!-- 카카오톡, 네이버 링크 공유 시 보여질 미리보기 화면 설정 (OG 태그) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="신랑 구재관 & 신부 이채희 결혼식에 초대합니다">
+    <meta property="og:description" content="2026.11.12 (토) 오후 5시 50분 | 호텔수성 수성스퀘어 아이비홀">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop">
+    <meta property="og:url" content="">
+
+    <!-- 구글 웹 폰트 적용 (감성적인 고운바탕 & 정갈한 노토산스) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* 글로벌 스타일 스타일링 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #f7f6f3;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #3f3e3b;
+            line-height: 1.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* 모바일 최적화 컨테이너 (최대 가로폭 450px) */
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background-color: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .serif {
+            font-family: 'Gowun Batang', serif;
+        }
+
+        section {
+            padding: 70px 24px;
+            border-bottom: 1px solid #f2e2df;
+        }
+        
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 13px;
+            letter-spacing: 4px;
+            color: #c9a091;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* 1. 메인 커버 섹션 */
+        #main-cover {
+            padding: 0;
+            background-color: #faf6f5;
+        }
+        .cover-img-box {
+            width: 100%;
+            position: relative;
+            line-height: 0;
+        }
+        .cover-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .main-details {
+            padding: 45px 20px 55px 20px;
+        }
+        .main-title-sub {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #a8948a;
+            margin-bottom: 12px;
+        }
+        .main-title-names {
+            font-size: 26px;
+            font-weight: 700;
+            color: #2b2a28;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        .main-title-date {
+            font-size: 14px;
+            color: #6e6b64;
+            letter-spacing: 0.5px;
+        }
+
+        /* 디데이 카운트다운 */
+        .dday-box {
+            margin-top: 20px;
+            display: inline-block;
+            background-color: #f2e7e4;
+            color: #a67c70;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* 2. 초대 인사말 섹션 */
+        #intro-greeting {
+            background-color: #ffffff;
+        }
+        .greeting-message {
+            font-size: 15px;
+            color: #4a4945;
+            line-height: 2.3;
+            margin-bottom: 45px;
+        }
+        .family-tree {
+            max-width: 320px;
+            margin: 0 auto;
+            border-top: 1px dashed #ebdcd8;
+            padding-top: 35px;
+            font-size: 15px;
+        }
+        .family-row {
+            margin: 8px 0;
+            color: #333;
+        }
+        .family-row span {
+            color: #9c9991;
+            font-size: 13px;
+            margin: 0 6px;
+        }
+
+        /* 3. 예식 달력 섹션 */
+        #wedding-calendar {
+            background-color: #faf6f5;
+        }
+        .calendar-date-display {
+            font-size: 17px;
+            font-weight: 700;
+            color: #5c5652;
+            margin-bottom: 25px;
+        }
+        .mini-calendar {
+            max-width: 300px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(166, 124, 112, 0.05);
+        }
+        .grid-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            row-gap: 14px;
+            font-size: 13px;
+        }
+        .grid-calendar div {
+            padding: 4px 0;
+            color: #444;
+        }
+        .week-head {
+            font-weight: 700;
+            color: #a8a59e !important;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        .week-head:first-child, .sun {
+            color: #d66b65 !important;
+        }
+        .wedding-highlight {
+            background-color: #c9a091;
+            color: #ffffff !important;
+            border-radius: 50%;
+            font-weight: 700;
+            transform: scale(1.1);
+        }
+
+        /* 4. 오시는 길 및 지도 섹션 */
+        #wedding-location {
+            background-color: #ffffff;
+        }
+        .hall-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #2b2a28;
+            margin-bottom: 4px;
+        }
+        .hall-address-text {
+            font-size: 13px;
+            color: #7a7771;
+            margin-bottom: 25px;
+        }
+        .map-area {
+            width: 100%;
+            height: 220px;
+            background-color: #f0ede9;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9c978f;
+            font-size: 13px;
+            border: 1px solid #ebdcd8;
+            /* 실제 지도 이미지나 카카오맵 스크립트를 넣을 수 있는 자리 */
+        }
+        .navigation-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+        .nav-btn {
+            flex: 1;
+            padding: 12px 0;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid #ebdcd8;
+            background-color: #fff;
+            color: #5c5652;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .nav-btn:hover {
+            background-color: #faf6f5;
+        }
+        .route-details {
+            text-align: left;
+            padding: 0 10px;
+            font-size: 13px;
+            line-height: 1.6; /* 글자 줄간격을 넓혀 눈을 편안하게 합니다 */
+        }
+
+        /* 상위 카테고리 타이틀 (공항, IC, 역 등) */
+        .route-category {
+            font-weight: 700;
+            font-size: 14px; /* 타이틀을 본문보다 살짝 크게 */
+            color: #a67c70;
+            margin-top: 24px; /* 카테고리 간의 간격을 확실히 분리 */
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+        }
+
+        .route-category::before {
+            content: "•";
+            margin-right: 6px;
+        }
+
+        /* 상위 카테고리의 일반 설명글 (들여쓰기 적용으로 타이틀 아래 정렬) */
+        .route-desc {
+            font-weight: 400; /* 일반 글씨 두께로 변경하여 타이틀 강조 */
+            color: #555555;
+            margin-left: 14px; /* 점(•) 너비만큼 들여쓰기하여 깔끔하게 정렬 */
+            margin-top: 2px;
+            margin-bottom: 4px;
+        }
+
+        /* [하부 카테고리 타이틀] (동대구역, 대구역 등) */
+        .route-subcategory {
+            font-weight: 700;
+            color: #444444; /* 조금 더 선명한 회색 */
+            margin-left: 14px; /* 상위 카테고리 글자 시작 라인에 맞춤 */
+            margin-top: 14px;  /* 하부 카테고리 항목끼리의 간격 */
+            margin-bottom: 4px;
+        }
+
+        /* [하부 카테고리 세부 내용] (택시, 버스 등) */
+        .route-subcategory-contents {
+            font-weight: 400; /* ★ 일반 두께로 변경하여 가독성 상승 */
+            color: #666666;   /* 본문보다 살짝 연한 회색으로 위계 차이 부여 */
+            margin-left: 28px; /* 하부 타이틀보다 한 번 더 안쪽으로 들여쓰기 */
+            margin-top: 2px;
+            margin-bottom: 4px;
+        }
+
+        /* 5. 마음 전하실 곳 (축의금 계좌) 섹션 */
+        #gift-accounts {
+            background-color: #faf6f5;
+        }
+        .gift-info-text {
+            font-size: 14px;
+            color: #7a7771;
+            margin-bottom: 30px;
+        }
+        .toggle-menu-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #ffffff;
+            border: 1px solid #ebdcd8;
+            text-align: left;
+            font-size: 14px;
+            color: #4a4945;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+        }
+        .toggle-panel {
+            display: none;
+            background-color: #ffffff;
+            border: 1px solid #ebdcd8;
+            border-top: none;
+            margin-top: -12px;
+            margin-bottom: 12px;
+            padding: 8px 16px;
+            text-align: left;
+            border-radius: 0 0 6px 6px;
+        }
+        .account-details-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f7f6f3;
+            font-size: 13.5px;
+        }
+        .account-details-row:last-child {
+            border-bottom: none;
+        }
+        .btn-clipboard {
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 500;
+            background-color: #f2e7e4;
+            border: none;
+            color: #a67c70;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn-clipboard:hover {
+            background-color: #ebdcd8;
+        }
+
+        /* 푸터 디자인 */
+        footer {
+            padding: 45px 20px;
+            background-color: #ede9e4;
+            font-size: 11px;
+            color: #9c9991;
+            letter-spacing: 1.5px;
+        }
+
+        /* 갤러리 전체 컨테이너 */
+        .gallery-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        text-align: center;
+        }
+
+        .gallery-title {
+        font-size: 24px;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        color: #333;
+        }
+
+        /* 액자형 그리드 (기본 PC: 3열 배치 / 6개면 딱 2줄로 떨어집니다) */
+        .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+        }
+
+        /* 모바일 대응 (화면이 작을 때는 2열 배치) */
+        @media (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        }
+
+        /* 액자 스타일 */
+        .gallery-item {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        padding: 8px; /* 테두리와 이미지 사이 간격 (액자 매트 느낌) */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+        border-radius: 4px;
+        transition: transform 0.3s ease;
+        }
+
+        /* 마우스 올렸을 때 살짝 들리는 효과 */
+        .gallery-item:hover {
+        transform: translateY(-3px);
+        }
+
+        /* 이미지 비율 조정 */
+        .gallery-item img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1; /* 이미지를 정사각형 액자 형태로 통일 (원치 않으면 삭제 가능) */
+        object-fit: cover; /* 비율 유지하며 꽉 차게 */
+        display: block;
+        }
+
+        /* 초기 숨김 처리 클래스 */
+        .gallery-item.hidden {
+        display: none;
+        }
+
+        /* 버튼 스타일 */
+        .gallery-btn {
+        padding: 12px 30px;
+        font-size: 14px;
+        background-color: #ffffff;
+        color: #555555;
+        border: 1px solid #cccccc;
+        border-radius: 20px; /* 둥근 버튼 */
+        cursor: pointer;
+        transition: all 0.2s ease;
+        }
+
+        .gallery-btn:hover {
+        background-color: #f5f5f5;
+        border-color: #999999;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- 1. 메인 커버 섹션 -->
+    <section id="main-cover">
+        <div class="cover-img-box">
+            <!-- 기본 플레이스홀더 이미지입니다. 본인의 웨딩 사진 URL로 변경해 사용하세요. -->
+            <img class="cover-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop" alt="Wedding Main">
+        </div>
+        <div class="main-details">
+            <p class="main-title-sub serif">우리 두 사람 결혼합니다</p>
+            <p class="main-title-names serif">구재관 ♥ 이채희</p>
+            <p class="main-title-date">2026년 11월 14일 토요일 오후 5시 50분<br>호텔수성 수성스퀘어 아이비홀</p>
+            <div class="dday-box" id="dday-counter">WEDDING DAY</div>
+        </div>
+    </section>
+
+    <!-- 2. 초대 인사말 섹션 -->
+    <section id="intro-greeting">
+        <p class="section-title serif">Invitation</p>
+        <p class="greeting-message serif">
+            서로 다른 색깔로 살아온 두 사람이<br>
+            사랑이라는 하나의 빛을 보았습니다.<br>
+            <br>
+            서로를 마주 보며 다져온 깊은 믿음으로<br>
+            이제 고운 삶의 길을 함께 걸어가고자 합니다.<br>
+            <br>
+            저희의 새로운 출발을 알리는 뜻깊은 날,<br>
+            자리를 빛내어 축복해 주시면 고맙겠습니다.
+        </p>
+        
+        <div class="family-tree">
+            <div class="family-row">
+                <b>구승근 · 김정옥</b> <span>의 아들</span> <b>재관</b>
+            </div>
+            <div class="family-row">
+                <b>이은현</b> <span>의 딸</span> <b>채희</b>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 예식 달력 섹션 -->
+    <section id="wedding-calendar">
+        <p class="section-title serif">Date</p>
+        <p class="calendar-date-display serif">2026.11.14 (토) 오후 5시 50분</p>
+        
+        <div class="mini-calendar">
+            <div class="grid-calendar">
+                <div class="week-head">일</div><div class="week-head">월</div><div class="week-head">화</div><div class="week-head">수</div><div class="week-head">목</div><div class="week-head">금</div><div class="week-head">토</div>
+                <div class="sun">1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div class="sun">8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div class="wedding-highlight">14</div><div class="sun">15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div class="sun">22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div class="sun">29</div><div>30</div><div></div><div></div><div></div><div></div><div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 오시는 길 및 지도 섹션 -->
+    <section id="wedding-location">
+        <p class="section-title serif">Location</p>
+        <p class="hall-title serif">호텔수성 수성스퀘어 아이비홀</p>
+        <p class="hall-address-text">대구 수성구 용학로 92-4(몇층인지 체크)</p>
+        
+        <!-- 지도 플레이스홀더 영역 (배포 후 스크린샷 이미지 등으로 변경 권장) -->
+        <div class="map-area">여기에 지도 이미지나 약도를 삽입하세요.</div>
+
+        <div class="navigation-links">
+            <!-- 실제 길찾기 URL 주소로 변경하여 사용 가능합니다 -->
+            <a href="https://map.naver.com/p/directions/-/3AoyMq,2zAZeu,%ED%98%B8%ED%85%94%EC%88%98%EC%84%B1%20%EC%88%98%EC%84%B1%EC%8A%A4%ED%80%98%EC%96%B4,1730058287,PLACE_POI/-/car?c=15.00,0,0,3,dh" target="_blank" class="nav-btn">네이버 지도 - 길찾기</a>
+
+        </div>
+
+        <div class="route-details">            
+            <!-- 동대구IC -->
+            <p class="route-category">동대구IC에서 오시는 길</p>
+            <p class="route-desc">동대구IC에서 두산오거리 방향으로 12KM (35분 소요)</p>
+
+            <!-- 북대구IC -->
+            <p class="route-category">북대구IC에서 오시는 길</p>
+            <p class="route-desc">북대구IC에서 가창방면으로 14KM(20분 소요)</p>
+
+            <!-- 수성IC -->
+            <p class="route-category">수성IC에서 오시는 길</p>
+            <p class="route-desc">수성IC에서 범물방향으로 8KM(15분 소요)</p>
+
+            <!-- 역에서 오시는 길 (상위) -->
+            <p class="route-category">역에서 오시는 길</p>
+
+            <!-- ↙ 하부 카테고리: 동대구역 -->
+            <p class="route-subcategory">▪ 동대구역 - 호텔과의 거리 : 총 6.4KM</p>
+            <p class="route-subcategory-contents">택시 - 소요시간 약 20분 (요금 10,000원 정도)</p>
+            <p class="route-subcategory-contents">버스 - 401, 814 (TBC방송국 하차, 도보 15분 정도)</p>
+
+            <!-- ↙ 하부 카테고리: 대구역 -->
+            <p class="route-subcategory">▪ 대구역 - 호텔과의 거리 : 총 9.5KM</p>
+            <p class="route-subcategory-contents">택시 - 소요시간 약 30분 (요금 12,000원 정도)</p>
+            <p class="route-subcategory-contents">버스 - 401, 410 → 신천역 4번 출구 → 불교한방병원 하차 (도보 10분 정도)</p>
+
+            <!-- ↙ 하부 카테고리: 복합환승센터 -->
+            <p class="route-subcategory">▪ 동대구 복합환승센터 - 호텔과의 거리: 총 6.3KM</p>
+            <p class="route-subcategory-contents">택시 - 소요시간 약 20분 (요금 10,000원 정도)</p>
+            <p class="route-subcategory-contents">버스 - 909 → 신천치안센터 하차(환승) → 410 (호텔수성건너 하차)</p>
+        </div>
+    </section>
+
+    <!-- 갤러리 섹션 시작 -->
+    <div class="gallery-container">
+    <h2 class="gallery-title">GALLERY</h2>
+    
+    <div class="gallery-grid">
+        <!-- 처음 노출될 6개 이미지 (1~6) -->
+        <div class="gallery-item"><img src="image1.jpg" alt="사진 1"></div>
+        <div class="gallery-item"><img src="image2.jpg" alt="사진 2"></div>
+        <div class="gallery-item"><img src="image3.jpg" alt="사진 3"></div>
+        <div class="gallery-item"><img src="image4.jpg" alt="사진 4"></div>
+        <div class="gallery-item"><img src="image5.jpg" alt="사진 5"></div>
+        <div class="gallery-item"><img src="image6.jpg" alt="사진 6"></div>
+
+        <!-- 접혀있을 추가 이미지 (7번 이후부터는 extra-item hidden 추가) -->
+        <div class="gallery-item extra-item hidden"><img src="image7.jpg" alt="사진 7"></div>
+        <div class="gallery-item extra-item hidden"><img src="image8.jpg" alt="사진 8"></div>
+        <div class="gallery-item extra-item hidden"><img src="image9.jpg" alt="사진 9"></div>
+    </div>
+
+    <!-- 더보기 / 접기 버튼 -->
+    <button id="gallery-toggle-btn" class="gallery-btn">더보기</button>
+    </div>
+    <!-- 갤러리 섹션 끝 -->
+
+    <!-- 5. 축의금 및 마음 전하실 곳 섹션 -->
+    <section id="gift-accounts">
+        <p class="section-title serif">Account</p>
+        <p class="gift-info-text">참석이 어려우신 분들을 위해<br>축복의 마음을 전할 계좌를 안내해 드립니다.</p>
+        
+        <!-- 신랑측 축의금 계좌 아코디언 -->
+        <button class="toggle-menu-btn serif" onclick="clickToggle('panel-groom')">
+            신랑측 마음 전하실 곳 <span id="arrow-panel-groom">▼</span>
+        </button>
+        <div id="panel-groom" class="toggle-panel">
+            <div class="account-details-row">
+                <div>신랑 구재관<br><b>국민은행 00000</b></div>
+                <button class="btn-clipboard" onclick="copyClipboard('00000')">복사</button>
+            </div>
+            <div class="account-details-row">
+                <div>부친 홍판서<br><b>신한은행 987-654-321000</b></div>
+                <button class="btn-clipboard" onclick="copyClipboard('987-654-321000')">복사</button>
+            </div>
+        </div>
+
+        <!-- 신부측 축의금 계좌 아코디언 -->
+        <button class="toggle-menu-btn serif" onclick="clickToggle('panel-bride')">
+            신부측 마음 전하실 곳 <span id="arrow-panel-bride">▼</span>
+        </button>
+        <div id="panel-bride" class="toggle-panel">
+            <div class="account-details-row">
+                <div>신부 이채희<br><b>국민은행 1002-123-456789</b></div>
+                <button class="btn-clipboard" onclick="copyClipboard('1002-123-456789')">복사</button>
+            </div>
+            <div class="account-details-row">
+                <div>부친 김선달<br><b>하나은행 777-999-888888</b></div>
+                <button class="btn-clipboard" onclick="copyClipboard('777-999-888888')">복사</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 하단 카피라이트 -->
+    <footer>
+        <p>© 2026 Koo Jae Kwan & Lee Chae Hee. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</div>
+
+<script>
+    // 아코디언 토글 메뉴 작동 함수
+    function clickToggle(panelId) {
+        const panel = document.getElementById(panelId);
+        const arrow = document.getElementById('arrow-' + panelId);
+
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+            arrow.textContent = "▼";
+        } else {
+            panel.style.display = "block";
+            arrow.textContent = "▲";
+        }
+    }
+
+    // 계좌번호 클립보드 복사 함수
+    function copyClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("성공적으로 복사되었습니다.");
+        }).catch(err => {
+            alert("복사에 실패했습니다. 직접 선택하여 복사해 주세요.");
+        });
+    }
+
+    // 디데이 카운트다운 기능 추가 (예식일 기준 실시간 계산)
+    function calculateDDay() {
+        const weddingDate = new Date("2026-11-14").getTime();
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const element = document.getElementById("dday-counter");
+
+        if (days > 0) {
+            element.textContent = "D-" + days;
+        } else if (days === 0) {
+            element.textContent = "D-Day";
+        } else {
+            element.textContent = "감사합니다~";
+        }
+    }
+    
+    // 페이지 로드 시 디데이 계산 실행
+    calculateDDay();
+</script>
+</body>
+</html>
