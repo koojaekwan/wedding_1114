@@ -540,6 +540,7 @@
 </div>
 </div>
 
+
 <!-- ======================================================= -->
 <!-- 3. 자바스크립트 (오류 추적용 안내창 장착) -->
 <!-- ======================================================= -->
@@ -596,51 +597,8 @@
 </button>
 
 <!-- 배경음악 파일 (원하는 mp3 파일 경로를 넣어주세요. loop는 무한반복) -->
- <audio id="my-bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
-<!-- <audio id="my-bgm" src="Aria.mp3" loop></audio> -->
-
-<!-- [4] 자바스크립트 -->
-<!-- [4] 자바스크립트 (첫 터치 시 자동 재생 및 토글 제어) -->
-<script>
-    (function() {
-    const bgm = document.getElementById('my-bgm');
-    const musicBtn = document.getElementById('music-toggle-btn');
-    const musicIcon = document.getElementById('music-btn-icon');
-    
-    const introOverlay = document.getElementById('intro-overlay');
-    const entryBtn = document.getElementById('entry-btn');
-
-    if (!bgm || !musicBtn || !entryBtn) return;
-
-    // [핵심] 초대장 열기 버튼을 누르면 실행되는 기능
-    entryBtn.addEventListener('click', function() {
-        // 1. 대문 화면 부드럽게 지우기
-        introOverlay.classList.add('fade-out');
-
-        // 2. 음악 즉시 재생 (사용자 클릭 직후라 100% 성공)
-        bgm.play()
-        .then(() => {
-            musicBtn.classList.add('playing');
-            musicIcon.textContent = '⏸️';
-        })
-        .catch(err => console.log("재생 실패:", err));
-    });
-
-    // 우측 하단 고정 음악 버튼 토글 기능 (재생/정지)
-    musicBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (bgm.paused) {
-        bgm.play();
-        musicBtn.classList.add('playing');
-        musicIcon.textContent = '⏸️';
-        } else {
-        bgm.pause();
-        musicBtn.classList.remove('playing');
-        musicIcon.textContent = '🎵';
-        }
-    });
-    })();
-</script>
+<!-- <audio id="my-bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio> -->
+<audio id="my-bgm" src="maybe.mp3" loop></audio>
 
 
 <div class="container">
