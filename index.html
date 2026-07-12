@@ -560,29 +560,55 @@
     const bgm = document.getElementById('my-bgm');
     const musicBtn = document.getElementById('music-toggle-btn');
     const musicIcon = document.getElementById('music-btn-icon');
-    const introOverlay = document.getElementById('intro-overlay');
-    const entryBtn = document.getElementById('entry-btn');
 
-    // 🔍 어디서 파업이 났는지 잡아내는 추적 장치
-    // if (!bgm || !musicBtn || !introOverlay || !entryBtn) {
-    //   alert("코드 내에 빠진 태그가 있습니다! [오디오: " + !!bgm + ", 음악버튼: " + !!musicBtn + ", 대문: " + !!introOverlay + ", 입장버튼: " + !!entryBtn + "]");
-    //   return; 
-    // }
+    if (!bgm || !musicBtn) return;
 
-    // 음악 재생 시도
+    // 💡 음악을 재생하는 핵심 함수
+    function playBGM() {
+      if (bgm.paused) {
+        bgm.play()
+          .then(() => {
+            // 재생 성공 시 버튼 애니메이션 및 아이콘 변경
+            musicBtn.classList.add('playing');
+            musicIcon.textContent = '⏸️';
+            // 재생에 성공했으므로 더 이상 스크롤/터치를 감지할 필요가 없어서 이벤트를 제거합니다.
+            removeUnlockEvents();
+          })
+          .catch(err => {
+            console.log("재생 대기 중...", err);
+          });
+      }
+    }
+
+    // 감지 이벤트 해제 함수
+    function removeUnlockEvents() {
+      document.removeEventListener('scroll', playBGM);
+      document.removeEventListener('touchstart', playBGM);
+      document.removeEventListener('click', playBGM);
+    }
+
+    // 1. 하객이 들어와서 스크롤을 내리거나, 화면을 만지거나, 클릭하면 즉시 음악 실행!
+    document.addEventListener('scroll', playBGM);
+    document.addEventListener('touchstart', playBGM);
+    document.addEventListener('click', playBGM);
+
+    // 2. 혹시나 브라우저 환경이 처음부터 자동 재생을 허용하는 상태인지 1차 시도
     bgm.play()
-    .then(() => {
+      .then(() => {
         musicBtn.classList.add('playing');
         musicIcon.textContent = '⏸️';
-    })
-    .catch(err => {
-        console.log("재생 실패원인:", err);
-        alert("음악 자동 재생 err → 수동으로 재생해주세요.");
-    });
+        removeUnlockEvents(); // 성공 시 이벤트 해제
+      })
+      .catch(err => {
+        // 차단되어도 경고창을 띄우지 않고, 콘솔로그만 남긴 채 1번 이벤트(스크롤)를 기다립니다.
+        console.log("초기 자동재생 차단됨 -> 하객의 스크롤/터치 액션을 대기합니다.");
+      });
 
-    // 🎵 우측 하단 고정 버튼 클릭 시 (재생/일시정지 토글)
+    // 🎵 우측 하단 고정 버튼을 직접 클릭했을 때 (재생/일시정지 토글)
     musicBtn.addEventListener('click', function(e) {
       e.stopPropagation();
+      removeUnlockEvents(); // 사용자가 수동으로 버튼을 조작했으므로 자동 재생 감지 종료
+
       if (bgm.paused) {
         bgm.play();
         musicBtn.classList.add('playing');
@@ -595,6 +621,8 @@
     });
   });
 </script>
+
+
 
 <!-- 화면 우측 하단에 고정될 음악 버튼 -->
 <button id="music-toggle-btn" class="music-floating-btn">
