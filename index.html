@@ -548,6 +548,55 @@
             display: block;         /* 이미지 하단에 미세한 공백이 생기는 버그 방지 */
         }
 
+        /* 이미지에 마우스 올렸을 때 클릭 가능하다는 표시 */
+        .gallery-item img {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.02); /* 살짝 커지는 효과 (선택사항) */
+        }
+
+        /* 모달 배경 (전체 화면을 어둡게) */
+        .modal-overlay {
+            display: none; /* 기본값은 숨김 */
+            position: fixed;
+            z-index: 1000; /* 최상단에 위치 */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* 배경 투명도 */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 모달 내부의 큰 이미지 */
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            animation: fadeIn 0.3s ease; /* 켜질 때 부드럽게 */
+        }
+
+        /* 닫기 버튼 (X) */
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 부드러운 등장 애니메이션 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+
     </style>
 </head>
 
@@ -620,6 +669,7 @@
       }
     });
   });
+  
 </script>
 
 
@@ -739,17 +789,23 @@
     
     <div class="gallery-grid">
         <!-- 처음 노출될 6개 이미지 (1~6) -->
-        <div class="gallery-item"><img src="수성스퀘어_약도.jpg" alt="사진 1"></div>
-        <div class="gallery-item"><img src="image2.jpg" alt="사진 2"></div>
-        <div class="gallery-item"><img src="image3.jpg" alt="사진 3"></div>
-        <div class="gallery-item"><img src="image4.jpg" alt="사진 4"></div>
-        <div class="gallery-item"><img src="image5.jpg" alt="사진 5"></div>
-        <div class="gallery-item"><img src="image6.jpg" alt="사진 6"></div>
+        <div class="gallery-item"><img src="pic/LLL_5922.jpg" alt="사진 1"></div>
+        <div class="gallery-item"><img src="pic/LLL_6126.JPG" alt="사진 2"></div>
+        <div class="gallery-item"><img src="pic/LLL_6194.JPG" alt="사진 3"></div>
+        <div class="gallery-item"><img src="pic/LLL_6239.JPG" alt="사진 4"></div>
+        <div class="gallery-item"><img src="pic/LLL_6323.JPG" alt="사진 5"></div>
+        <div class="gallery-item"><img src="pic/LLL_6338.JPG" alt="사진 6"></div>
 
         <!-- 접혀있을 추가 이미지 (7번 이후부터는 extra-item hidden 추가) -->
         <div class="gallery-item extra-item hidden"><img src="image7.jpg" alt="사진 7"></div>
         <div class="gallery-item extra-item hidden"><img src="image8.jpg" alt="사진 8"></div>
         <div class="gallery-item extra-item hidden"><img src="image9.jpg" alt="사진 9"></div>
+    </div>
+
+    <!-- 💡 새로 추가할 모달 팝업 구조 (body 닫히기 전에 넣으셔도 됩니다) -->
+    <div id="galleryModal" class="modal-overlay">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage" alt="크게 보기">
     </div>
 
     <!-- 더보기 / 접기 버튼 -->
@@ -788,6 +844,38 @@
         });
         }
     });
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = document.getElementById("galleryModal");
+        const modalImg = document.getElementById("modalImage");
+        const closeBtn = document.querySelector(".modal-close");
+        
+        // 갤러리 안의 모든 이미지 요소를 찾습니다.
+        const galleryImages = document.querySelectorAll(".gallery-grid .gallery-item img");
+
+        // 각 이미지마다 클릭 이벤트 추가
+        galleryImages.forEach(img => {
+            img.addEventListener("click", function() {
+                modal.style.display = "flex"; // 모달 보이기
+                modalImg.src = this.src;     // 클릭한 이미지 주소를 큰 이미지에 전달
+                modalImg.alt = this.alt;     // alt 텍스트도 전달
+            });
+        });
+
+        // 닫기 버튼(X) 누르면 닫기
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+
+        // 이미지 밖의 어두운 배경을 눌러도 닫히도록 설정
+        modal.addEventListener("click", function(e) {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+
     </script>
 
 
