@@ -557,28 +557,35 @@
             transform: scale(1.02); /* 살짝 커지는 효과 (선택사항) */
         }
 
-        /* 모달 배경 (전체 화면을 어둡게) */
+        /* --- 모달 팝업 스타일 (완전 교체) --- */
+
+        /* 모달 배경 */
         .modal-overlay {
-            display: none; /* 기본값은 숨김 */
+            display: none; /* 기본 숨김 */
             position: fixed;
-            z-index: 1000; /* 최상단에 위치 */
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* 배경 투명도 */
+            background-color: rgba(0, 0, 0, 0.9); /* 배경을 더 어둡게 */
             justify-content: center;
             align-items: center;
+            
+            /* 💡 핵심: 터치 환경에서 확대/축소 및 기본 동작 막기 */
+            touch-action: none; 
         }
 
-        /* 모달 내부의 큰 이미지 */
+        /* 모달 내부 큰 이미지 */
         .modal-content {
             max-width: 90%;
             max-height: 90%;
             object-fit: contain;
-            user-select: none; /* 드래그 시 이미지 파랗게 블록 지정되는 것 방지 */
+            user-select: none;
             -webkit-user-drag: none;
-            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+            
+            /* 부드러운 이미지 전환 효과 */
+            transition: opacity 0.2s ease-in-out;
         }
 
         /* 닫기 버튼 (X) */
@@ -590,42 +597,70 @@
             font-size: 40px;
             font-weight: bold;
             cursor: pointer;
+            z-index: 1020; /* 화살표보다 위에 */
         }
 
-        /* 부드러운 등장 애니메이션 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* [기존 CSS에 아래 내용을 추가 및 수정해 주세요] */
-
-        /* 좌우 네비게이션 버튼 스타일 */
+        /* 좌우 네비게이션 버튼 공통 스타일 */
         .modal-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
             color: #fff;
             font-size: 30px;
             border: none;
             padding: 15px 20px;
             cursor: pointer;
             border-radius: 5px;
-            transition: background 0.2s;
             z-index: 1010;
             user-select: none;
-        }
-        .modal-nav:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
 
-        /* 모바일 전용: 화면이 작을 때는 화살표 버튼을 숨겨서 이미지를 더 넓게 보게 합니다 (스와이프로 제어 가능하니까요) */
+            /* 💡 핵심: 평소에는 투명하게 숨김 */
+            opacity: 0; 
+            transition: opacity 0.3s ease, background 0.2s ease;
+        }
+
+        /* 💡 핵심: 모달창에 마우스를 올리면(손을 대면) 화살표가 나타남 */
+        .modal-overlay:hover .modal-nav {
+            opacity: 1;
+        }
+
+        /* 네비게이션 버튼 호버 시 스타일 */
+        .modal-nav:hover {
+            background: rgba(0, 0, 0, 0.8); /* 더 진하게 */
+        }
+
+        /* 💡 오버랩 스타일: 사진 영역 안쪽으로 화살표를 배치 */
+        .prev-btn {
+            left: 30px; /* 원하시면 값 조정 가능 (예: 10px) */
+        }
+        .next-btn {
+            right: 30px; /* 원하시면 값 조정 가능 */
+        }
+
+        /* 모바일 전용: 확대 금지 강화 및 버튼 터치 영역 확대 */
         @media (max-width: 768px) {
-            /* .modal-nav { display: none; } */
-            .modal-content { max-width: 100%; }
+            .modal-content {
+                max-width: 98%; /* 사진을 조금 더 꽉 차게 */
+                
+                /* 💡 핀치 줌, 더블 탭 줌 완전 방지 */
+                touch-action: manipulation; 
+                -webkit-text-size-adjust: none;
+            }
+            
+            .modal-nav {
+                /* 모바일에서는 버튼 투명도를 조금 줘서 항상 보이게 할 수도 있고, 
+                터치했을 때만 보이게 할 수도 있습니다. 
+                여기서는 요청하신 대로 터치 시에만 보이도록 기본 opacity: 0 유지하되, 
+                클릭하기 편하게 패딩을 조금 키웁니다. */
+                padding: 20px 25px; 
+                font-size: 25px;
+            }
+            
+            .modal-overlay:active .modal-nav {
+                /* 터치 중일 때만 살짝 보이게 함 */
+                opacity: 0.7; 
+            }
         }
 
 
@@ -901,13 +936,13 @@
 
         // 1. 이미지 클릭 시 모달 열기
         function initGallery() {
-            // 'hidden' 여부와 상관없이 현재 갤러리 그리드 안에 있는 모든 이미지를 갱신
+            // 현재 갤러리 그리드 안에 있는 모든 이미지를 갱신
             allImages = Array.from(document.querySelectorAll(".gallery-grid .gallery-item img"));
 
             allImages.forEach((img, index) => {
                 // 중복 등록 방지를 위해 기존 이벤트 제거 후 재등록 (더보기 버튼 대응용)
                 img.removeEventListener("click", openModal);
-                img.addEventListener("click", (e) => openModal(index));
+                img.addEventListener("click", () => openModal(index));
             });
         }
 
@@ -915,86 +950,65 @@
             currentIndex = index;
             updateModalImage();
             modal.style.display = "flex";
+            
+            // 💡 모달 열릴 때 바디 스크롤 막기 (선택 사항)
+            document.body.style.overflow = 'hidden'; 
         }
 
-        // 2. 모달 이미지 업데이트 (부드러운 전환 효과 포함)
+        // 2. 모달 이미지 업데이트 (부드러운 전환 효과)
         function updateModalImage() {
-            modalImg.style.opacity = "0";
-            modalImg.style.transform = "scale(0.95)";
+            // 이미지를 살짝 투명하게 만들었다가 소스를 바꾸고 다시 보여줌
+            modalImg.style.opacity = "0.3";
             
+            // 브라우저가 이미지를 비동기로 로드하는 시간을 고려하여 아주 잠시 대기
             setTimeout(() => {
                 modalImg.src = allImages[currentIndex].src;
                 modalImg.alt = allImages[currentIndex].alt;
                 modalImg.style.opacity = "1";
-                modalImg.style.transform = "scale(1)";
-            }, 150); // 0.15초 뒤에 바뀐 이미지를 스르륵 보여줌
+            }, 100); 
         }
 
-        // 3. 이전 / 다음 사진 이동 로직
+        // 3. 이전 / 다음 사진 이동 로직 (무한 루프)
         function showPrev() {
-            // 첫 번째 사진에서 이전으로 가면 마지막 사진으로 회전
             currentIndex = (currentIndex === 0) ? allImages.length - 1 : currentIndex - 1;
             updateModalImage();
         }
 
         function showNext() {
-            // 마지막 사진에서 다음으로 가면 첫 번째 사진으로 회전
             currentIndex = (currentIndex === allImages.length - 1) ? 0 : currentIndex + 1;
             updateModalImage();
         }
 
-        // 버튼 클릭 이벤트
-        prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showPrev(); });
-        nextBtn.addEventListener("click", (e) => { e.stopPropagation(); showNext(); });
+        // 버튼 클릭 이벤트 (💡 스와이프 대신 이 버튼들만 사용됩니다)
+        prevBtn.addEventListener("click", (e) => { 
+            e.stopPropagation(); // 모달 배경 클릭 이벤트 전파 막기
+            showPrev(); 
+        });
+        
+        nextBtn.addEventListener("click", (e) => { 
+            e.stopPropagation(); // 모달 배경 클릭 이벤트 전파 막기
+            showNext(); 
+        });
 
-        // 4. 키보드 방향키 이벤트 (PC 사용자 편의성)
+        // 4. 키보드 방향키 이벤트 (PC 사용자 편의성 유지)
         document.addEventListener("keydown", function(e) {
             if (modal.style.display === "flex") {
                 if (e.key === "ArrowLeft") showPrev();
                 if (e.key === "ArrowRight") showNext();
-                if (e.key === "Escape") closeModal();
+                if (e.key === "Escape") closeModal(); // ESC로 닫기
             }
         });
 
-        // 5. 모바일/PC 스와이프 (드래그) 감지 로직
-        let startX = 0;
-        let endX = 0;
-        const swipeThreshold = 50; // 최소 50px 이상 움직여야 넘어가도록 설정
-
-        // 터치 시작 (모바일) / 마우스 다운 (PC)
-        function handleStart(e) {
-            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-        }
-
-        // 터치 종료 (모바일) / 마우스 업 (PC)
-        function handleEnd(e) {
-            endX = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
-            handleSwipe();
-        }
-
-        function handleSwipe() {
-            const diffX = startX - endX;
-            
-            if (Math.abs(diffX) > swipeThreshold) {
-                if (diffX > 0) {
-                    showNext(); // 왼쪽으로 쓸 넘기면 -> 다음 사진
-                } else {
-                    showPrev(); // 오른쪽으로 쓸 넘기면 -> 이전 사진
-                }
-            }
-        }
-
-        // 모달창 자체에 드래그/터치 이벤트 부여
-        modal.addEventListener("touchstart", handleStart, { passive: true });
-        modal.addEventListener("touchend", handleEnd, { passive: true });
-        modal.addEventListener("mousedown", handleStart);
-        modal.addEventListener("mouseup", handleEnd);
-
-        // 6. 닫기 로직
+        // 5. 닫기 로직
         function closeModal() {
             modal.style.display = "none";
+            
+            // 💡 모달 닫힐 때 바디 스크롤 원복 (선택 사항)
+            document.body.style.overflow = ''; 
         }
+        
         closeBtn.addEventListener("click", closeModal);
+        
         modal.addEventListener("click", function(e) {
             // 배경을 클릭했을 때만 닫히도록 체크 (이미지나 버튼 클릭 시 닫힘 방지)
             if (e.target === modal) closeModal();
@@ -1002,10 +1016,6 @@
 
         // 최초 실행
         initGallery();
-
-        // 💡 중요: 만약 나중에 '더보기' 버튼을 만드신다면, 
-        // 더보기 버튼 클릭 이벤트의 맨 마지막 줄에 `initGallery();` 코드를 한 줄 실행해 주셔야 
-        // 새로 나타난 사진들까지 스와이프 배열에 정상 포함됩니다!
     });
 
     </script>
