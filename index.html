@@ -576,7 +576,9 @@
             max-width: 90%;
             max-height: 90%;
             object-fit: contain;
-            animation: fadeIn 0.3s ease; /* 켜질 때 부드럽게 */
+            user-select: none; /* 드래그 시 이미지 파랗게 블록 지정되는 것 방지 */
+            -webkit-user-drag: none;
+            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
         }
 
         /* 닫기 버튼 (X) */
@@ -595,6 +597,37 @@
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
+
+        /* [기존 CSS에 아래 내용을 추가 및 수정해 주세요] */
+
+        /* 좌우 네비게이션 버튼 스타일 */
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-size: 30px;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.2s;
+            z-index: 1010;
+            user-select: none;
+        }
+        .modal-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+        /* 모바일 전용: 화면이 작을 때는 화살표 버튼을 숨겨서 이미지를 더 넓게 보게 합니다 (스와이프로 제어 가능하니까요) */
+        @media (max-width: 768px) {
+            /* .modal-nav { display: none; } */
+            .modal-content { max-width: 100%; }
+        }
+
 
 
     </style>
@@ -797,9 +830,10 @@
         <div class="gallery-item"><img src="pic/LLL_6338.JPG" alt="사진 6" loading="lazy"></div>
 
         <!-- 접혀있을 추가 이미지 (7번 이후부터는 extra-item hidden 추가) -->
-        <div class="gallery-item extra-item hidden"><img src="pic/LLL_6447.JPG" alt="사진 7" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/LLL_6510.JPG" alt="사진 8" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/LLL_6666.JPG" alt="사진 9" loading="lazy"></div>
+        <div class="gallery-item extra-item hidden"><img src="pic/LLL_6510.JPG" alt="사진 7" loading="lazy"></div>
+        <div class="gallery-item extra-item hidden"><img src="pic/LLL_6702.JPG" alt="사진 8" loading="lazy"></div>
+        <div class="gallery-item extra-item hidden"><img src="pic/LLL_6889.JPG" alt="사진 9" loading="lazy"></div>
+        <div class="gallery-item extra-item hidden"><img src="pic/LLL_7136.JPG" alt="사진 10" loading="lazy"></div>
     </div>
 
     <!-- 💡 새로 추가할 모달 팝업 구조 (body 닫히기 전에 넣으셔도 됩니다) -->
@@ -812,6 +846,15 @@
     <button id="gallery-toggle-btn" class="gallery-btn">더보기</button>
     </div>
 
+    <!-- 모달 팝업 구조 수정 -->
+    <div id="galleryModal" class="modal-overlay">
+        <span class="modal-close">&times;</span>
+        
+        <!-- 💡 좌우 이동 버튼 추가 -->
+        <button class="modal-nav prev-btn">&#10094;</button>
+        <img class="modal-content" id="modalImage" alt="크게 보기">
+        <button class="modal-nav next-btn">&#10095;</button>
+    </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -850,30 +893,119 @@
         const modal = document.getElementById("galleryModal");
         const modalImg = document.getElementById("modalImage");
         const closeBtn = document.querySelector(".modal-close");
-        
-        // 갤러리 안의 모든 이미지 요소를 찾습니다.
-        const galleryImages = document.querySelectorAll(".gallery-grid .gallery-item img");
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
 
-        // 각 이미지마다 클릭 이벤트 추가
-        galleryImages.forEach(img => {
-            img.addEventListener("click", function() {
-                modal.style.display = "flex"; // 모달 보이기
-                modalImg.src = this.src;     // 클릭한 이미지 주소를 큰 이미지에 전달
-                modalImg.alt = this.alt;     // alt 텍스트도 전달
+        let currentIndex = 0; // 현재 보고 있는 이미지의 인덱스
+        let allImages = [];   // 전체 이미지 배열을 담을 변수
+
+        // 1. 이미지 클릭 시 모달 열기
+        function initGallery() {
+            // 'hidden' 여부와 상관없이 현재 갤러리 그리드 안에 있는 모든 이미지를 갱신
+            allImages = Array.from(document.querySelectorAll(".gallery-grid .gallery-item img"));
+
+            allImages.forEach((img, index) => {
+                // 중복 등록 방지를 위해 기존 이벤트 제거 후 재등록 (더보기 버튼 대응용)
+                img.removeEventListener("click", openModal);
+                img.addEventListener("click", (e) => openModal(index));
             });
-        });
+        }
 
-        // 닫기 버튼(X) 누르면 닫기
-        closeBtn.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
+        function openModal(index) {
+            currentIndex = index;
+            updateModalImage();
+            modal.style.display = "flex";
+        }
 
-        // 이미지 밖의 어두운 배경을 눌러도 닫히도록 설정
-        modal.addEventListener("click", function(e) {
-            if (e.target === modal) {
-                modal.style.display = "none";
+        // 2. 모달 이미지 업데이트 (부드러운 전환 효과 포함)
+        function updateModalImage() {
+            modalImg.style.opacity = "0";
+            modalImg.style.transform = "scale(0.95)";
+            
+            setTimeout(() => {
+                modalImg.src = allImages[currentIndex].src;
+                modalImg.alt = allImages[currentIndex].alt;
+                modalImg.style.opacity = "1";
+                modalImg.style.transform = "scale(1)";
+            }, 150); // 0.15초 뒤에 바뀐 이미지를 스르륵 보여줌
+        }
+
+        // 3. 이전 / 다음 사진 이동 로직
+        function showPrev() {
+            // 첫 번째 사진에서 이전으로 가면 마지막 사진으로 회전
+            currentIndex = (currentIndex === 0) ? allImages.length - 1 : currentIndex - 1;
+            updateModalImage();
+        }
+
+        function showNext() {
+            // 마지막 사진에서 다음으로 가면 첫 번째 사진으로 회전
+            currentIndex = (currentIndex === allImages.length - 1) ? 0 : currentIndex + 1;
+            updateModalImage();
+        }
+
+        // 버튼 클릭 이벤트
+        prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showPrev(); });
+        nextBtn.addEventListener("click", (e) => { e.stopPropagation(); showNext(); });
+
+        // 4. 키보드 방향키 이벤트 (PC 사용자 편의성)
+        document.addEventListener("keydown", function(e) {
+            if (modal.style.display === "flex") {
+                if (e.key === "ArrowLeft") showPrev();
+                if (e.key === "ArrowRight") showNext();
+                if (e.key === "Escape") closeModal();
             }
         });
+
+        // 5. 모바일/PC 스와이프 (드래그) 감지 로직
+        let startX = 0;
+        let endX = 0;
+        const swipeThreshold = 50; // 최소 50px 이상 움직여야 넘어가도록 설정
+
+        // 터치 시작 (모바일) / 마우스 다운 (PC)
+        function handleStart(e) {
+            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        }
+
+        // 터치 종료 (모바일) / 마우스 업 (PC)
+        function handleEnd(e) {
+            endX = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
+            handleSwipe();
+        }
+
+        function handleSwipe() {
+            const diffX = startX - endX;
+            
+            if (Math.abs(diffX) > swipeThreshold) {
+                if (diffX > 0) {
+                    showNext(); // 왼쪽으로 쓸 넘기면 -> 다음 사진
+                } else {
+                    showPrev(); // 오른쪽으로 쓸 넘기면 -> 이전 사진
+                }
+            }
+        }
+
+        // 모달창 자체에 드래그/터치 이벤트 부여
+        modal.addEventListener("touchstart", handleStart, { passive: true });
+        modal.addEventListener("touchend", handleEnd, { passive: true });
+        modal.addEventListener("mousedown", handleStart);
+        modal.addEventListener("mouseup", handleEnd);
+
+        // 6. 닫기 로직
+        function closeModal() {
+            modal.style.display = "none";
+        }
+        closeBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", function(e) {
+            // 배경을 클릭했을 때만 닫히도록 체크 (이미지나 버튼 클릭 시 닫힘 방지)
+            if (e.target === modal) closeModal();
+        });
+
+        // 최초 실행
+        initGallery();
+
+        // 💡 중요: 만약 나중에 '더보기' 버튼을 만드신다면, 
+        // 더보기 버튼 클릭 이벤트의 맨 마지막 줄에 `initGallery();` 코드를 한 줄 실행해 주셔야 
+        // 새로 나타난 사진들까지 스와이프 배열에 정상 포함됩니다!
     });
 
     </script>
