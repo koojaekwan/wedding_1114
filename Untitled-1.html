@@ -1,0 +1,80 @@
+<!-- 가독성과 구조를 최적화한 HTML -->
+<div class="family-tree">
+    <div class="family-row">
+        <div class="parents">
+            <!-- 💡 고인이 계실 경우 이름 앞에 <span>故</span>를 넣으시면 됩니다. -->
+            <b class="deceased"><span>故</span>구승근</b> · <b>김정옥</b>
+        </div>
+        <div class="relation">의 아들</div>
+        <div class="child"><b>구재관</b></div>
+    </div>
+    
+    <div class="family-row">
+        <div class="parents">
+            <b>이은현</b>
+        </div>
+        <div class="relation">의 딸</div>
+        <div class="child"><b>이채희</b></div>
+    </div>
+</div>
+
+<style>
+/* 칸 및 디자인 최적화 스타일 */
+.family-tree {
+    max-width: 450px;       /* 모바일 화면에 맞춰 최대 너비 제한 */
+    margin: 20px auto;      /* 상하 여백 및 가운데 정렬 */
+    padding: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.family-row {
+    display: flex;
+    align-items: center;    /* 세로 축 기준 일렬 정렬 */
+    justify-content: center;/* 가로 축 기준 가운데로 모음 */
+    margin-bottom: 14px;    /* 행과 행 사이의 간격(칸) 최적화 */
+    font-size: 15px;        /* 기본 폰트 크기 */
+    color: #333;
+}
+
+/* 마지막 행은 밑줄이나 여백을 줄이기 위해 */
+.family-row:last-child {
+    margin-bottom: 0;
+}
+
+/* 부모님 성함 영역 */
+.family-row .parents {
+    text-align: right;      /* 오른쪽 정렬로 중간 관계글자와 밀착 */
+    flex: 1;                /* 좌우 균형을 맞추기 위한 비율 분배 */
+    font-weight: 500;
+}
+
+/* '의 아들', '의 딸' 관계 문구 영역 */
+.family-row .relation {
+    margin: 0 12px;         /* 글자 좌우 여백(칸)을 주어 답답함 해소 */
+    color: #888;            /* 관계 글자는 조금 연하게 하여 주인공 이름 강조 */
+    font-size: 13px;
+    white-space: nowrap;    /* 화면이 좁아도 글자가 밑으로 깨지지 않게 방지 */
+}
+
+/* 자녀(신랑/신부) 성함 영역 */
+.family-row .child {
+    text-align: left;       /* 왼쪽 정렬 */
+    flex: 1;                /* 좌우 균형을 위한 비율 분배 */
+    font-size: 16px;        /* 주인공 이름은 부모님보다 미세하게 크게 */
+    letter-spacing: 0.5px;
+}
+
+/* 💡 고인(故人) 스타일 정의 */
+.family-row b.deceased {
+    color: #777;            /* 살아계신 분보다 아주 살짝만 옅은 톤으로 정중하게 처리 */
+    font-weight: normal;    /* 굵기를 살짝 뺌 */
+}
+
+/* '故' 글자 자체 스타일 */
+.family-row b.deceased span {
+    font-size: 11px;        /* 한자나 글자는 약간 작게 처리하여 성함 흐름을 해치지 않음 */
+    margin-right: 3px;      /* 성함과의 간격 */
+    color: #999;
+    vertical-align: middle; /* 중앙 정렬 */
+}
+</style>

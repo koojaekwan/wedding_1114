@@ -129,20 +129,65 @@
         }
         .family-tree {
             max-width: 320px;
+            width : fit-content;
             margin: 0 auto;
             border-top: 1px dashed #ebdcd8;
             padding-top: 35px;
             font-size: 15px;
         }
+
         .family-row {
-            margin: 8px 0;
+            display: flex;
+            align-items: center;  /* 세로축 중앙 정렬 */
+            margin: 12px 0;
             color: #333;
+            justify-content: center;
         }
-        .family-row span {
+
+        /* 1. 부모님 영역: 왼쪽 절반을 차지하고 글자는 오른쪽 정렬 */
+        .family-row .parents {
+            min-width : 150px;
+            flex: 1;              /* 왼쪽 영역 균등 분할 */
+            text-align: right;    /* 글자를 오른쪽 끝(가운데 조사 쪽)으로 밀착 */
+            padding-right: 8px;   /* 조사와의 간격 */
+        }
+
+        /* 2. 관계 영역: 정확히 정중앙에 고정 */
+        .family-row .relation {
+            flex-shrink: 0;       /* 너비가 줄어들지 않도록 고정 */
+            width: 55px;          /* '의 아들', '의 딸' 너비 딱 맞춤 */
+            text-align: center;   /* 가운데 정렬 */
             color: #9c9991;
             font-size: 13px;
-            margin: 0 6px;
         }
+
+        /* 3. 자녀 영역: 오른쪽 절반을 차지하고 글자는 왼쪽 정렬 */
+        .family-row .child {
+            flex: 1;              /* 오른쪽 영역 균등 분할 */
+            text-align: left;     /* 글자를 왼쪽 끝(가운데 조사 쪽)으로 밀착 */
+            padding-left: 8px;    /* 조사와의 간격 */
+        }
+
+        /* 성함 사이 점(·) 자동 생성 */
+        .family-row .parents b + b::before {
+            content: " · ";
+            font-weight: normal;
+            color: #ccc;
+            margin: 0 4px;
+        }
+
+        /* 고인(故人) 스타일 */
+        .family-row b.deceased {
+            color: #777;
+            font-weight: normal;
+        }
+        .family-row b.deceased span {
+            font-size: 11px;
+            margin-right: 3px;
+            color: #999;
+            vertical-align: middle;
+        }
+
 
         /* 3. 예식 달력 섹션 */
         #wedding-calendar {
@@ -663,6 +708,122 @@
             }
         }
 
+        /* CSS 스타일 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); /* 배경을 더 어둡게 하여 사진 집중도 향상 */
+            justify-content: center;
+            align-items: center;
+            
+            /* 💡 모바일 기기에서 기본 터치 줌/동작 원천 차단 (확대 금지) */
+            touch-action: none; 
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: opacity 0.2s ease-in-out;
+            
+            /* 💡 이미지 자체도 더블탭 줌 등이 작동하지 않도록 방지 */
+            touch-action: none; 
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1030; /* 화살표보다 무조건 위에 배치 */
+        }
+
+        /* 💡 화살표 기본 스타일 (오버랩 배치) */
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.4); /* 반투명 블랙 */
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 32px;
+            border: none;
+            padding: 18px 15px;
+            cursor: pointer;
+            z-index: 1020; /* 이미지 위로 띄움 */
+            user-select: none;
+            border-radius: 4px;
+            
+            /* 💡 마우스를 대거나 터치할 때만 뚜렷해지도록 기본은 은은하게 노출 */
+            opacity: 0.5;
+            transition: opacity 0.2s, background 0.2s;
+        }
+
+        /* PC에서 마우스를 대면 선명해짐 */
+        .modal-nav:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+        }
+
+        /* 사진 양 끝단 안쪽으로 오버랩되도록 배치 변경 */
+        .prev-btn {
+            left: 15px; 
+        }
+        .next-btn {
+            right: 15px;
+        }
+
+        /* 💡 스마트폰/모바일 전용 최적화 설정 */
+        @media (max-width: 768px) {
+            .modal-content {
+                max-width: 100%;
+                max-height: 85%;
+                /* 모바일 확대 금지 강화 */
+                touch-action: manipulation; 
+            }
+            
+            /* 💡 폰에서는 항상 화살표가 눈에 확실히 보이도록 투명도 고정 */
+            .modal-nav {
+                opacity: 0.85; 
+                background: rgba(0, 0, 0, 0.6); /* 터치하기 쉽도록 약간 더 어둡게 */
+                padding: 20px 16px; /* 손가락 터치 영역 확장 */
+                font-size: 26px;
+            }
+            
+            /* 손가락으로 누르고 있을 때의 피드백 */
+            .modal-nav:active {
+                background: rgba(0, 0, 0, 0.9);
+                color: #fff;
+            }
+            
+            .prev-btn {
+                left: 8px; /* 화면이 작으므로 여백을 조금 더 좁혀서 오버랩 지탱 */
+            }
+            .next-btn {
+                right: 8px;
+            }
+        }
 
 
     </style>
@@ -774,19 +935,30 @@
             저희 두 사람이<br>
             사랑과 믿음으로 한 가정을 이루게 되었습니다.<br>
             <br>
-            좋은 꿈, 바른 뜻으로 올바르게 살 수 있도록<br>
+            바르고 올바르게 살 수 있도록<br>
             축복과 격려 주시면 더 없는 기쁨으로<br>
             간직하겠습니다.
         </p>
         
-        <div class="family-tree">
-            <div class="family-row">
-                <b>구승근 · 김정옥</b> <span>의 아들</span> <b>재관</b>
+    <div class="family-tree">
+        <!-- 신랑 측 -->
+        <div class="family-row">
+            <div class="parents">
+                <b>구승근</b><b>김정옥</b>
             </div>
-            <div class="family-row">
-                <b>이은현</b> <span>의 딸</span> <b>채희</b>
-            </div>
+            <div class="relation">의 아들</div>
+            <div class="child"><b>재관</b></div>
         </div>
+        
+        <!-- 신부 측 -->
+        <div class="family-row">
+            <div class="parents">
+                <b class="deceased"><span>故</span>이상봉</b><b>이은현</b>
+            </div>
+            <div class="relation">의 &nbsp&nbsp&nbsp딸</div>
+            <div class="child"><b>채희</b></div>
+        </div>
+    </div>
     </section>
 
     <!-- 3. 예식 달력 섹션 -->
