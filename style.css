@@ -1,0 +1,812 @@
+
+/* 글로벌 스타일 스타일링 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #f7f6f3;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #3f3e3b;
+    line-height: 1.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 모바일 최적화 컨테이너 (최대 가로폭 450px) */
+.container {
+    width: 100%;
+    max-width: 450px;
+    background-color: #ffffff;
+    min-height: 100vh;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.serif {
+    font-family: 'Gowun Batang', serif;
+}
+
+section {
+    padding: 70px 24px;
+    border-bottom: 1px solid #f2e2df;
+}
+
+section:last-of-type {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: #c9a091;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* 1. 메인 커버 섹션 */
+#main-cover {
+    padding: 0;
+    background-color: #faf6f5;
+}
+.cover-img-box {
+    width: 100%;
+    position: relative;
+    line-height: 0;
+}
+.cover-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.main-details {
+    padding: 45px 20px 55px 20px;
+}
+.main-title-sub {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: #a8948a;
+    margin-bottom: 12px;
+}
+.main-title-names {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2b2a28;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+.main-title-date {
+    font-size: 14px;
+    color: #6e6b64;
+    letter-spacing: 0.5px;
+}
+
+/* 디데이 카운트다운 */
+.dday-box {
+    margin-top: 20px;
+    display: inline-block;
+    background-color: #f2e7e4;
+    color: #a67c70;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+}
+
+/* 2. 초대 인사말 섹션 */
+#intro-greeting {
+    background-color: #ffffff;
+}
+.greeting-message {
+    font-size: 15px;
+    color: #4a4945;
+    line-height: 2.3;
+    margin-bottom: 45px;
+}
+.family-tree {
+    max-width: 320px;
+    width : fit-content;
+    margin: 0 auto;
+    border-top: 1px dashed #ebdcd8;
+    padding-top: 35px;
+    font-size: 15px;
+}
+
+.family-row {
+    display: flex;
+    align-items: center;  /* 세로축 중앙 정렬 */
+    margin: 12px 0;
+    color: #333;
+    justify-content: center;
+}
+
+/* 1. 부모님 영역: 왼쪽 절반을 차지하고 글자는 오른쪽 정렬 */
+.family-row .parents {
+    min-width : 150px;
+    flex: 1;              /* 왼쪽 영역 균등 분할 */
+    text-align: right;    /* 글자를 오른쪽 끝(가운데 조사 쪽)으로 밀착 */
+    padding-right: 8px;   /* 조사와의 간격 */
+}
+
+/* 2. 관계 영역: 정확히 정중앙에 고정 */
+.family-row .relation {
+    flex-shrink: 0;       /* 너비가 줄어들지 않도록 고정 */
+    width: 55px;          /* '의 아들', '의 딸' 너비 딱 맞춤 */
+    text-align: center;   /* 가운데 정렬 */
+    color: #9c9991;
+    font-size: 13px;
+}
+
+/* 3. 자녀 영역: 오른쪽 절반을 차지하고 글자는 왼쪽 정렬 */
+.family-row .child {
+    flex: 1;              /* 오른쪽 영역 균등 분할 */
+    text-align: left;     /* 글자를 왼쪽 끝(가운데 조사 쪽)으로 밀착 */
+    padding-left: 8px;    /* 조사와의 간격 */
+}
+
+/* 성함 사이 점(·) 자동 생성 */
+.family-row .parents b + b::before {
+    content: " · ";
+    font-weight: normal;
+    color: #ccc;
+    margin: 0 4px;
+}
+
+/* 고인(故人) 스타일 */
+.family-row b.deceased {
+    color: #777;
+    font-weight: normal;
+}
+.family-row b.deceased span {
+    font-size: 11px;
+    margin-right: 3px;
+    color: #999;
+    vertical-align: middle;
+}
+
+
+/* 3. 예식 달력 섹션 */
+#wedding-calendar {
+    background-color: #faf6f5;
+}
+.calendar-date-display {
+    font-size: 17px;
+    font-weight: 700;
+    color: #5c5652;
+    margin-bottom: 25px;
+}
+.mini-calendar {
+    max-width: 300px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(166, 124, 112, 0.05);
+}
+.grid-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: 14px;
+    font-size: 13px;
+}
+.grid-calendar div {
+    padding: 4px 0;
+    color: #444;
+}
+.week-head {
+    font-weight: 700;
+    color: #a8a59e !important;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+.week-head:first-child, .sun {
+    color: #d66b65 !important;
+}
+.wedding-highlight {
+    background-color: #c9a091;
+    color: #ffffff !important;
+    border-radius: 50%;
+    font-weight: 700;
+    transform: scale(1.1);
+}
+
+/* 4. 오시는 길 및 지도 섹션 */
+#wedding-location {
+    background-color: #ffffff;
+}
+.hall-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #2b2a28;
+    margin-bottom: 4px;
+}
+.hall-address-text {
+    font-size: 13px;
+    color: #7a7771;
+    margin-bottom: 0px;
+}
+.hall-info-text {
+    font-size: 12px;
+    color: #7a7771;
+    margin-bottom: 25px;
+}
+.map-area {
+    width: 100%;
+    height: 330px;
+    background-color: #f0ede9;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9c978f;
+    font-size: 13px;
+    border: 1px solid #ebdcd8;
+    /* 실제 지도 이미지나 카카오맵 스크립트를 넣을 수 있는 자리 */
+}
+.navigation-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+.nav-btn {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid #ebdcd8;
+    background-color: #fff;
+    color: #5c5652;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+.nav-btn:hover {
+    background-color: #faf6f5;
+}
+.route-details {
+    text-align: left;
+    padding: 0 10px;
+    font-size: 13px;
+    line-height: 1.6; /* 글자 줄간격을 넓혀 눈을 편안하게 합니다 */
+}
+
+/* 상위 카테고리 타이틀 (공항, IC, 역 등) */
+.route-category {
+    font-weight: 700;
+    font-size: 14px; /* 타이틀을 본문보다 살짝 크게 */
+    color: #a67c70;
+    margin-top: 24px; /* 카테고리 간의 간격을 확실히 분리 */
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.route-category::before {
+    content: "•";
+    margin-right: 6px;
+}
+
+/* 상위 카테고리의 일반 설명글 (들여쓰기 적용으로 타이틀 아래 정렬) */
+.route-desc {
+    font-weight: 400; /* 일반 글씨 두께로 변경하여 타이틀 강조 */
+    color: #555555;
+    margin-left: 14px; /* 점(•) 너비만큼 들여쓰기하여 깔끔하게 정렬 */
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
+/* [하부 카테고리 타이틀] (동대구역, 대구역 등) */
+.route-subcategory {
+    font-weight: 700;
+    color: #444444; /* 조금 더 선명한 회색 */
+    margin-left: 14px; /* 상위 카테고리 글자 시작 라인에 맞춤 */
+    margin-top: 14px;  /* 하부 카테고리 항목끼리의 간격 */
+    margin-bottom: 4px;
+}
+
+/* [하부 카테고리 세부 내용] (택시, 버스 등) */
+.route-subcategory-contents {
+    font-weight: 400; /* ★ 일반 두께로 변경하여 가독성 상승 */
+    color: #666666;   /* 본문보다 살짝 연한 회색으로 위계 차이 부여 */
+    margin-left: 28px; /* 하부 타이틀보다 한 번 더 안쪽으로 들여쓰기 */
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
+/* 5. 마음 전하실 곳 (축의금 계좌) 섹션 */
+#gift-accounts {
+    background-color: #faf6f5;
+}
+.gift-info-text {
+    font-size: 14px;
+    color: #7a7771;
+    margin-bottom: 30px;
+}
+.toggle-menu-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #ffffff;
+    border: 1px solid #ebdcd8;
+    text-align: left;
+    font-size: 14px;
+    color: #4a4945;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+}
+.toggle-panel {
+    display: none;
+    background-color: #ffffff;
+    border: 1px solid #ebdcd8;
+    border-top: none;
+    margin-top: -12px;
+    margin-bottom: 12px;
+    padding: 8px 16px;
+    text-align: left;
+    border-radius: 0 0 6px 6px;
+}
+.account-details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #f7f6f3;
+    font-size: 13.5px;
+}
+.account-details-row:last-child {
+    border-bottom: none;
+}
+.btn-clipboard {
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    background-color: #f2e7e4;
+    border: none;
+    color: #a67c70;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.btn-clipboard:hover {
+    background-color: #ebdcd8;
+}
+
+/* 푸터 디자인 */
+footer {
+    padding: 45px 20px;
+    background-color: #ede9e4;
+    font-size: 11px;
+    color: #9c9991;
+    letter-spacing: 1.5px;
+}
+
+/* 갤러리 전체 컨테이너 */
+.gallery-container {
+max-width: 1200px;
+margin: 40px auto;
+padding: 0 20px;
+text-align: center;
+}
+
+.gallery-title {
+font-size: 24px;
+letter-spacing: 2px;
+margin-bottom: 20px;
+color: #333;
+}
+
+/* 액자형 그리드 (기본 PC: 3열 배치 / 6개면 딱 2줄로 떨어집니다) */
+.gallery-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 15px;
+margin-bottom: 25px;
+}
+
+/* 모바일 대응 (화면이 작을 때는 2열 배치) */
+@media (max-width: 768px) {
+.gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+}
+
+/* 액자 스타일 */
+.gallery-item {
+background: #fff;
+border: 1px solid #e0e0e0;
+padding: 8px; /* 테두리와 이미지 사이 간격 (액자 매트 느낌) */
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+border-radius: 4px;
+transition: transform 0.3s ease;
+}
+
+/* 마우스 올렸을 때 살짝 들리는 효과 */
+.gallery-item:hover {
+transform: translateY(-3px);
+}
+
+/* 이미지 비율 조정 */
+.gallery-item img {
+width: 100%;
+height: auto;
+aspect-ratio: 1 / 1; /* 이미지를 정사각형 액자 형태로 통일 (원치 않으면 삭제 가능) */
+object-fit: cover; /* 비율 유지하며 꽉 차게 */
+display: block;
+}
+
+/* 초기 숨김 처리 클래스 */
+.gallery-item.hidden {
+display: none;
+}
+
+/* 버튼 스타일 */
+.gallery-btn {
+padding: 12px 30px;
+font-size: 14px;
+background-color: #ffffff;
+color: #555555;
+border: 1px solid #cccccc;
+border-radius: 20px; /* 둥근 버튼 */
+cursor: pointer;
+transition: all 0.2s ease;
+}
+
+.gallery-btn:hover {
+background-color: #f5f5f5;
+border-color: #999999;
+}
+
+/* 음악 플로팅 버튼 스타일 */
+.music-floating-btn {
+position: fixed;
+bottom: 20px; /* 화면 아래에서 20px 띄움 */
+right: 20px;  /* 화면 우측에서 20px 띄움 */
+width: 45px;
+height: 45px;
+border-radius: 50%;
+background-color: rgba(255, 255, 255, 0.9);
+border: 1px solid #e6cbd6; /* 부드러운 톤의 테두리 */
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+z-index: 9999; /* 다른 요소보다 항상 위에 보이도록 설정 */
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 18px;
+transition: all 0.3s ease;
+}
+
+/* 음악이 재생 중일 때 버튼이 빙글빙글 도는 애니메이션 */
+.music-floating-btn.playing {
+animation: rotateMusic 4s linear infinite;
+background-color: #ffffff;
+border-color: #a67c70; /* 재생 중일 때는 포인트 컬러로 변경 */
+}
+
+@keyframes rotateMusic {
+from { transform: rotate(0deg); }
+to { transform: rotate(360deg); }
+}
+
+
+/* 화면 전체를 흐릿하고 고급스럽게 덮는 레이아웃 */
+#intro-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(255, 255, 255, 0.98); /* 배경색 (약간 투명한 흰색) */
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 10000; /* 최상단에 위치 */
+transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* 인트로 박스 */
+.intro-box {
+text-align: center;
+font-family: sans-serif;
+}
+
+.intro-title {
+font-size: 28px;
+letter-spacing: 4px;
+color: #a67c70;
+font-weight: bold;
+margin-bottom: 5px;
+}
+
+.intro-subtitle {
+font-size: 14px;
+color: #777;
+margin-bottom: 30px;
+}
+
+/* 입장 버튼 */
+.entry-button {
+padding: 15px 40px;
+font-size: 15px;
+background-color: #a67c70;
+color: white;
+border: none;
+border-radius: 25px;
+cursor: pointer;
+box-shadow: 0 4px 15px rgba(166, 124, 112, 0.3);
+transition: all 0.2s ease;
+}
+
+.entry-button:hover {
+background-color: #8e655a;
+transform: translateY(-2px);
+}
+
+/* 버튼을 누르면 인트로 화면이 사라지게 하는 클래스 */
+#intro-overlay.fade-out {
+opacity: 0;
+visibility: hidden;
+}
+
+
+/* 지도가 들어가는 바깥 상자 */
+.map-area {
+    width: 100%;
+    max-width: 450px;       /* 모바일 청첩장 가로 폭에 맞게 제한 */
+    margin: 16px auto;      /* 위아래 간격을 띄우고 가운데 정렬 */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;     /* 테두리 모서리를 부드럽게 둥글림 */
+    overflow: hidden;       /* 둥근 테두리 밖으로 이미지가 빠져나가지 않게 함 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); /* 은은한 그림자 효과 */
+}
+
+/* 상자 안의 실제 지도 이미지 */
+.map-img {
+    width: 100%;            /* 상자 너비에 맞춰 100% 꽉 차게 설정 */
+    height: auto;           /* 가로 비율에 맞춰 세로 높이 자동 조절 */
+    display: block;         /* 이미지 하단에 미세한 공백이 생기는 버그 방지 */
+}
+
+/* 이미지에 마우스 올렸을 때 클릭 가능하다는 표시 */
+.gallery-item img {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.gallery-item img:hover {
+    transform: scale(1.02); /* 살짝 커지는 효과 (선택사항) */
+}
+
+/* --- 모달 팝업 스타일 (완전 교체) --- */
+
+/* 모달 배경 */
+.modal-overlay {
+    display: none; /* 기본 숨김 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* 배경을 더 어둡게 */
+    justify-content: center;
+    align-items: center;
+    
+    /* 💡 핵심: 터치 환경에서 확대/축소 및 기본 동작 막기 */
+    touch-action: none; 
+}
+
+/* 모달 내부 큰 이미지 */
+.modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+    
+    /* 부드러운 이미지 전환 효과 */
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* 닫기 버튼 (X) */
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1020; /* 화살표보다 위에 */
+}
+
+/* 좌우 네비게이션 버튼 공통 스타일 */
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    color: #fff;
+    font-size: 30px;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1010;
+    user-select: none;
+
+    /* 💡 핵심: 평소에는 투명하게 숨김 */
+    opacity: 0; 
+    transition: opacity 0.3s ease, background 0.2s ease;
+}
+
+/* 💡 핵심: 모달창에 마우스를 올리면(손을 대면) 화살표가 나타남 */
+.modal-overlay:hover .modal-nav {
+    opacity: 1;
+}
+
+/* 네비게이션 버튼 호버 시 스타일 */
+.modal-nav:hover {
+    background: rgba(0, 0, 0, 0.8); /* 더 진하게 */
+}
+
+/* 💡 오버랩 스타일: 사진 영역 안쪽으로 화살표를 배치 */
+.prev-btn {
+    left: 30px; /* 원하시면 값 조정 가능 (예: 10px) */
+}
+.next-btn {
+    right: 30px; /* 원하시면 값 조정 가능 */
+}
+
+/* 모바일 전용: 확대 금지 강화 및 버튼 터치 영역 확대 */
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 98%; /* 사진을 조금 더 꽉 차게 */
+        
+        /* 💡 핀치 줌, 더블 탭 줌 완전 방지 */
+        touch-action: manipulation; 
+        -webkit-text-size-adjust: none;
+    }
+    
+    .modal-nav {
+        /* 모바일에서는 버튼 투명도를 조금 줘서 항상 보이게 할 수도 있고, 
+        터치했을 때만 보이게 할 수도 있습니다. 
+        여기서는 요청하신 대로 터치 시에만 보이도록 기본 opacity: 0 유지하되, 
+        클릭하기 편하게 패딩을 조금 키웁니다. */
+        padding: 20px 25px; 
+        font-size: 25px;
+    }
+    
+    .modal-overlay:active .modal-nav {
+        /* 터치 중일 때만 살짝 보이게 함 */
+        opacity: 0.7; 
+    }
+}
+
+/* CSS 스타일 */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+.hidden {
+    display: none;
+}
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* 배경을 더 어둡게 하여 사진 집중도 향상 */
+    justify-content: center;
+    align-items: center;
+    
+    /* 💡 모바일 기기에서 기본 터치 줌/동작 원천 차단 (확대 금지) */
+    touch-action: none; 
+}
+.modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: opacity 0.2s ease-in-out;
+    
+    /* 💡 이미지 자체도 더블탭 줌 등이 작동하지 않도록 방지 */
+    touch-action: none; 
+}
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1030; /* 화살표보다 무조건 위에 배치 */
+}
+
+/* 💡 화살표 기본 스타일 (오버랩 배치) */
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4); /* 반투명 블랙 */
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 32px;
+    border: none;
+    padding: 18px 15px;
+    cursor: pointer;
+    z-index: 1020; /* 이미지 위로 띄움 */
+    user-select: none;
+    border-radius: 4px;
+    
+    /* 💡 마우스를 대거나 터치할 때만 뚜렷해지도록 기본은 은은하게 노출 */
+    opacity: 0.5;
+    transition: opacity 0.2s, background 0.2s;
+}
+
+/* PC에서 마우스를 대면 선명해짐 */
+.modal-nav:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+/* 사진 양 끝단 안쪽으로 오버랩되도록 배치 변경 */
+.prev-btn {
+    left: 15px; 
+}
+.next-btn {
+    right: 15px;
+}
+
+/* 💡 스마트폰/모바일 전용 최적화 설정 */
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 100%;
+        max-height: 85%;
+        /* 모바일 확대 금지 강화 */
+        touch-action: manipulation; 
+    }
+    
+    /* 💡 폰에서는 항상 화살표가 눈에 확실히 보이도록 투명도 고정 */
+    .modal-nav {
+        opacity: 0.85; 
+        background: rgba(0, 0, 0, 0.6); /* 터치하기 쉽도록 약간 더 어둡게 */
+        padding: 20px 16px; /* 손가락 터치 영역 확장 */
+        font-size: 26px;
+    }
+    
+    /* 손가락으로 누르고 있을 때의 피드백 */
+    .modal-nav:active {
+        background: rgba(0, 0, 0, 0.9);
+        color: #fff;
+    }
+    
+    .prev-btn {
+        left: 8px; /* 화면이 작으므로 여백을 조금 더 좁혀서 오버랩 지탱 */
+    }
+    .next-btn {
+        right: 8px;
+    }
+}
