@@ -40,7 +40,7 @@ section:last-of-type {
 }
 
 .section-title {
-    font-size: 13px;
+    font-size: 15px;
     letter-spacing: 4px;
     color: #c9a091;
     margin-bottom: 35px;
@@ -67,20 +67,20 @@ section:last-of-type {
     padding: 45px 20px 55px 20px;
 }
 .main-title-sub {
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 3px;
     color: #a8948a;
     margin-bottom: 12px;
 }
 .main-title-names {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 700;
     color: #2b2a28;
     margin-bottom: 25px;
     letter-spacing: 1px;
 }
 .main-title-date {
-    font-size: 14px;
+    font-size: 16px;
     color: #6e6b64;
     letter-spacing: 0.5px;
 }
@@ -103,7 +103,7 @@ section:last-of-type {
     background-color: #ffffff;
 }
 .greeting-message {
-    font-size: 15px;
+    font-size: 16px;
     color: #4a4945;
     line-height: 2.3;
     margin-bottom: 45px;
@@ -131,6 +131,7 @@ section:last-of-type {
     flex: 1;              /* 왼쪽 영역 균등 분할 */
     text-align: right;    /* 글자를 오른쪽 끝(가운데 조사 쪽)으로 밀착 */
     padding-right: 8px;   /* 조사와의 간격 */
+    font-size: 16px;
 }
 
 /* 2. 관계 영역: 정확히 정중앙에 고정 */
@@ -139,7 +140,7 @@ section:last-of-type {
     width: 55px;          /* '의 아들', '의 딸' 너비 딱 맞춤 */
     text-align: center;   /* 가운데 정렬 */
     color: #9c9991;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 /* 3. 자녀 영역: 오른쪽 절반을 차지하고 글자는 왼쪽 정렬 */
@@ -147,6 +148,7 @@ section:last-of-type {
     flex: 1;              /* 오른쪽 영역 균등 분할 */
     text-align: left;     /* 글자를 왼쪽 끝(가운데 조사 쪽)으로 밀착 */
     padding-left: 8px;    /* 조사와의 간격 */
+    font-size: 16px;
 }
 
 /* 성함 사이 점(·) 자동 생성 */
@@ -175,7 +177,7 @@ section:last-of-type {
     background-color: #faf6f5;
 }
 .calendar-date-display {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
     color: #5c5652;
     margin-bottom: 25px;
@@ -226,12 +228,12 @@ section:last-of-type {
     margin-bottom: 4px;
 }
 .hall-address-text {
-    font-size: 13px;
+    font-size: 15px;
     color: #7a7771;
     margin-bottom: 0px;
 }
 .hall-info-text {
-    font-size: 12px;
+    font-size: 14px;
     color: #7a7771;
     margin-bottom: 25px;
 }
@@ -258,7 +260,7 @@ section:last-of-type {
 .nav-btn {
     flex: 1;
     padding: 12px 0;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     border: 1px solid #ebdcd8;
     background-color: #fff;
@@ -273,14 +275,14 @@ section:last-of-type {
 .route-details {
     text-align: left;
     padding: 0 10px;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.6; /* 글자 줄간격을 넓혀 눈을 편안하게 합니다 */
 }
 
 /* 상위 카테고리 타이틀 (공항, IC, 역 등) */
 .route-category {
     font-weight: 700;
-    font-size: 14px; /* 타이틀을 본문보다 살짝 크게 */
+    font-size: 16px; /* 타이틀을 본문보다 살짝 크게 */
     color: #a67c70;
     margin-top: 24px; /* 카테고리 간의 간격을 확실히 분리 */
     margin-bottom: 6px;
@@ -325,7 +327,7 @@ section:last-of-type {
     background-color: #faf6f5;
 }
 .gift-info-text {
-    font-size: 14px;
+    font-size: 16px;
     color: #7a7771;
     margin-bottom: 30px;
 }
@@ -363,14 +365,14 @@ section:last-of-type {
     align-items: center;
     padding: 14px 0;
     border-bottom: 1px solid #f7f6f3;
-    font-size: 13.5px;
+    font-size: 15px;
 }
 .account-details-row:last-child {
     border-bottom: none;
 }
 .btn-clipboard {
     padding: 6px 12px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     background-color: #f2e7e4;
     border: none;
@@ -454,7 +456,7 @@ display: none;
 /* 버튼 스타일 */
 .gallery-btn {
 padding: 12px 30px;
-font-size: 14px;
+font-size: 15px;
 background-color: #ffffff;
 color: #555555;
 border: 1px solid #cccccc;
