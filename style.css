@@ -131,7 +131,7 @@ section:last-of-type {
     flex: 1;              /* 왼쪽 영역 균등 분할 */
     text-align: right;    /* 글자를 오른쪽 끝(가운데 조사 쪽)으로 밀착 */
     padding-right: 8px;   /* 조사와의 간격 */
-    font-size: 16px;
+    font-size: 18px;
 }
 
 /* 2. 관계 영역: 정확히 정중앙에 고정 */
@@ -140,7 +140,7 @@ section:last-of-type {
     width: 55px;          /* '의 아들', '의 딸' 너비 딱 맞춤 */
     text-align: center;   /* 가운데 정렬 */
     color: #9c9991;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 /* 3. 자녀 영역: 오른쪽 절반을 차지하고 글자는 왼쪽 정렬 */
@@ -148,7 +148,7 @@ section:last-of-type {
     flex: 1;              /* 오른쪽 영역 균등 분할 */
     text-align: left;     /* 글자를 왼쪽 끝(가운데 조사 쪽)으로 밀착 */
     padding-left: 8px;    /* 조사와의 간격 */
-    font-size: 16px;
+    font-size: 18px;
 }
 
 /* 성함 사이 점(·) 자동 생성 */
