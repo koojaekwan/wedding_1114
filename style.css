@@ -132,6 +132,7 @@ section:last-of-type {
     text-align: right;    /* 글자를 오른쪽 끝(가운데 조사 쪽)으로 밀착 */
     padding-right: 3px;   /* 조사와의 간격 */
     font-size: 18px;
+    white-space: nowrap;   /* 줄바꿈 금지 */
 }
 
 /* 2. 관계 영역: 정확히 정중앙에 고정 */
