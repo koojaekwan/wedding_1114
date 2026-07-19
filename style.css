@@ -109,7 +109,7 @@ section:last-of-type {
     margin-bottom: 45px;
 }
 .family-tree {
-    max-width: 320px;
+    max-width: 600px;
     width : fit-content;
     margin: 0 auto;
     border-top: 1px dashed #ebdcd8;
@@ -130,14 +130,14 @@ section:last-of-type {
     min-width : 150px;
     flex: 1;              /* 왼쪽 영역 균등 분할 */
     text-align: right;    /* 글자를 오른쪽 끝(가운데 조사 쪽)으로 밀착 */
-    padding-right: 8px;   /* 조사와의 간격 */
+    padding-right: 3px;   /* 조사와의 간격 */
     font-size: 18px;
 }
 
 /* 2. 관계 영역: 정확히 정중앙에 고정 */
 .family-row .relation {
     flex-shrink: 0;       /* 너비가 줄어들지 않도록 고정 */
-    width: 55px;          /* '의 아들', '의 딸' 너비 딱 맞춤 */
+    width: 50px;          /* '의 아들', '의 딸' 너비 딱 맞춤 */
     text-align: center;   /* 가운데 정렬 */
     color: #9c9991;
     font-size: 16px;
