@@ -110,7 +110,7 @@ section:last-of-type {
 }
 .family-tree {
     max-width: 600px;
-    width : fit-content;
+    width: fit-content;
     margin: 0 auto;
     border-top: 1px dashed #ebdcd8;
     padding-top: 35px;
@@ -119,36 +119,36 @@ section:last-of-type {
 
 .family-row {
     display: flex;
-    align-items: center;  /* 세로축 중앙 정렬 */
+    align-items: center;
     margin: 12px 0;
     color: #333;
     justify-content: center;
 }
 
-/* 1. 부모님 영역: 왼쪽 절반을 차지하고 글자는 오른쪽 정렬 */
+/* 1. 부모님 영역 */
 .family-row .parents {
-    min-width : 150px;
-    flex: 1;              /* 왼쪽 영역 균등 분할 */
-    text-align: right;    /* 글자를 오른쪽 끝(가운데 조사 쪽)으로 밀착 */
-    padding-right: 3px;   /* 조사와의 간격 */
+    min-width: 150px;
+    flex: 1;
+    text-align: right;
+    padding-right: 6px;
     font-size: 18px;
-    white-space: nowrap;   /* 줄바꿈 금지 */
+    white-space: nowrap;
 }
 
-/* 2. 관계 영역: 정확히 정중앙에 고정 */
+/* 2. 관계 영역 ('의 아들', '의 딸' 정중앙 고정) */
 .family-row .relation {
-    flex-shrink: 0;       /* 너비가 줄어들지 않도록 고정 */
-    width: 50px;          /* '의 아들', '의 딸' 너비 딱 맞춤 */
-    text-align: center;   /* 가운데 정렬 */
+    flex-shrink: 0;
+    width: 65px;          /* '의 아들', '의 딸'이 여유롭게 들어가도록 폭 조절 */
+    text-align: center;
     color: #9c9991;
-    font-size: 16px;
+    font-size: 15px;
 }
 
-/* 3. 자녀 영역: 오른쪽 절반을 차지하고 글자는 왼쪽 정렬 */
+/* 3. 자녀 영역 */
 .family-row .child {
-    flex: 1;              /* 오른쪽 영역 균등 분할 */
-    text-align: left;     /* 글자를 왼쪽 끝(가운데 조사 쪽)으로 밀착 */
-    padding-left: 8px;    /* 조사와의 간격 */
+    flex: 1;
+    text-align: left;
+    padding-left: 6px;
     font-size: 18px;
 }
 
@@ -160,16 +160,18 @@ section:last-of-type {
     margin: 0 4px;
 }
 
-/* 고인(故人) 스타일 */
+/* 💡 고인(故人) 디테일 스타일 개선 */
 .family-row b.deceased {
-    color: #777;
-    font-weight: normal;
+    font-weight: normal;    /* 고인 성함은 일반 굵기로 은은하게 처리 */
+    color: #555;
 }
+
 .family-row b.deceased span {
-    font-size: 11px;
-    margin-right: 3px;
-    color: #999;
-    vertical-align: middle;
+    font-size: 12px;        /* '故' 글자 크기를 12px로 축소 (기본 18px 대비) */
+    font-weight: normal;
+    color: #888;            /* 옅은 회색으로 정중한 톤 처리 */
+    margin-right: 2px;      /* 성함과의 미세 간격 */
+    vertical-align: 1px;    /* 텍스트 중앙선 맞춤 */
 }
 
 
@@ -524,7 +526,7 @@ transition: opacity 0.5s ease, visibility 0.5s ease;
 text-align: center;
 font-family: sans-serif;
 }
-
+dd
 .intro-title {
 font-size: 28px;
 letter-spacing: 4px;
