@@ -199,9 +199,10 @@ section:last-of-type {
     row-gap: 14px;
     font-size: 13px;
 }
-.grid-calendar div {
-    padding: 4px 0;
-    color: #444;
+.grid-calendar > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .week-head {
     font-weight: 700;
@@ -213,11 +214,18 @@ section:last-of-type {
     color: #d66b65 !important;
 }
 .wedding-highlight {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
     background-color: #c9a091;
-    color: #ffffff !important;
+    color: #fff !important;
     border-radius: 50%;
     font-weight: 700;
-    transform: scale(1.1);
+    box-sizing: border-box;
 }
 
 /* 4. 오시는 길 및 지도 섹션 */
