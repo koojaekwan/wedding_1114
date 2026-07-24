@@ -251,3 +251,17 @@ if (days > 0) {
 
 // 페이지 로드 시 디데이 계산 실행
 calculateDDay();
+
+
+// 동적 naver api
+var map = new naver.maps.Map('map', {
+    center: new naver.maps.LatLng(35.8253091,128.620327),
+    zoom: 15, //지도의 초기 줌 레벨
+    minZoom: 7, //지도의 최소 줌 레벨
+    zoomControl: true,
+    zoomControlOptions: { //줌 컨트롤의 옵션
+    position: naver.maps.Position.TOP_RIGHT},
+    scaleControl: false,
+    logoControl: false,
+    mapDataControl: false,
+});
