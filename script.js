@@ -276,6 +276,10 @@ var wedding = new naver.maps.LatLng(35.8252300,128.620010);
 
 document.getElementById("goWeddingHall").addEventListener("click", function () {
     map.morph(wedding, 16);
+
+    naver.maps.Event.once(map, "idle", function () {
+        infoWindow.open(map, marker);
+    });
 });
 
 
@@ -305,7 +309,3 @@ var infoWindow = new naver.maps.InfoWindow({
 infoWindow.open(map, marker);
 
 var wedding = new naver.maps.LatLng(35.8252300,128.620010);
-
-document.getElementById("goWeddingHall").addEventListener("click", function () {
-    map.panTo(wedding);
-});
