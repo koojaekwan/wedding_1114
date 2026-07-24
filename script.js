@@ -268,7 +268,7 @@ var map = new naver.maps.Map('map', {
 
 var marker = new naver.maps.Marker({
     position: new naver.maps.LatLng(35.8252300,128.620010),
-    map: map
+    map: map,
 });
 
 
@@ -276,4 +276,36 @@ var wedding = new naver.maps.LatLng(35.8252300,128.620010);
 
 document.getElementById("goWeddingHall").addEventListener("click", function () {
     map.morph(wedding, 16);
+});
+
+
+// infowindow 추가
+var infoWindow = new naver.maps.InfoWindow({
+    borderWidth: 0,
+    disableAnchor: false,
+    backgroundColor: "#fff",
+    pixelOffset: new naver.maps.Point(0, -8),
+    content: `
+        <div style="
+            padding:8px 14px;
+            border-radius:18px;
+            background:#fff;
+            box-shadow:0 2px 8px rgba(0,0,0,.18);
+            font-size:13px;
+            font-weight:600;
+            color:#444;
+            white-space:nowrap;
+        ">
+            📍 호텔수성 수성스퀘어
+        </div>
+    `
+});
+
+// 항상 표시
+infoWindow.open(map, marker);
+
+var wedding = new naver.maps.LatLng(35.8252300,128.620010);
+
+document.getElementById("goWeddingHall").addEventListener("click", function () {
+    map.panTo(wedding);
 });
