@@ -255,8 +255,8 @@ calculateDDay();
 
 // 동적 naver api
 var map = new naver.maps.Map('map', {
-    center: new naver.maps.LatLng(35.8253091,128.620327),
-    zoom: 15, //지도의 초기 줌 레벨
+    center: new naver.maps.LatLng(35.8252300,128.620010),
+    zoom: 16, //지도의 초기 줌 레벨
     minZoom: 7, //지도의 최소 줌 레벨
     zoomControl: true,
     zoomControlOptions: { //줌 컨트롤의 옵션
@@ -264,4 +264,16 @@ var map = new naver.maps.Map('map', {
     scaleControl: false,
     logoControl: false,
     mapDataControl: false,
+});
+
+var marker = new naver.maps.Marker({
+    position: new naver.maps.LatLng(35.8252300,128.620010),
+    map: map
+});
+
+
+var wedding = new naver.maps.LatLng(35.8252300,128.620010);
+
+document.getElementById("goWeddingHall").addEventListener("click", function () {
+    map.morph(wedding, 16);
 });

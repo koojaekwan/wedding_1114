@@ -250,7 +250,7 @@ section:last-of-type {
 }
 .map-area {
     width: 100%;
-    height: 330px;
+    height: 100%;
     background-color: #f0ede9;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -306,6 +306,35 @@ section:last-of-type {
     margin-right: 6px;
 }
 
+
+/* map 버튼 */
+.map-area {
+    position: relative;
+}
+
+#goWeddingHall {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+
+    z-index: 1000;
+
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px;
+    background: white;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+#goWeddingHall:hover {
+    background: #f5f5f5;
+}
+
+
 /* 상위 카테고리의 일반 설명글 (들여쓰기 적용으로 타이틀 아래 정렬) */
 .route-desc {
     font-weight: 400; /* 일반 글씨 두께로 변경하여 타이틀 강조 */
@@ -332,6 +361,7 @@ section:last-of-type {
     margin-top: 2px;
     margin-bottom: 4px;
 }
+
 
 /* 5. 마음 전하실 곳 (축의금 계좌) 섹션 */
 #gift-accounts {
