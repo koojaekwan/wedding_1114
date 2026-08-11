@@ -302,7 +302,7 @@ section:last-of-type {
 }
 
 .route-category::before {
-    content: "•";
+    content: "";
     margin-right: 6px;
 }
 
