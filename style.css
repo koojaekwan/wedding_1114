@@ -1,6 +1,6 @@
 /* ==========================================================================
    구재관 ♥ 이채희  |  2026.11.14
-   Mobile Wedding Invitation — Modern Minimal
+   Mobile Wedding Invitation — Modern Serif
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -43,9 +43,9 @@
   --ease: cubic-bezier(.22, .61, .36, 1);
   --ease-out: cubic-bezier(.16, 1, .3, 1);
 
-  /* Type */
+  /* Type — 전체적으로 부드럽고 따뜻한 명조체(Noto Serif KR) 위주로 변경 */
   --serif: 'Cormorant Garamond', 'Noto Serif KR', 'Gowun Batang', serif;
-  --sans:  'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --sans:  'Noto Serif KR', 'Gowun Batang', -apple-system, BlinkMacSystemFont, serif;
   --kserif: 'Noto Serif KR', 'Gowun Batang', serif;
 }
 
@@ -58,10 +58,10 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   background-color: var(--bg);
-  font-family: var(--sans);
+  font-family: var(--kserif);
   font-weight: 400;
   color: var(--ink-2);
-  line-height: 1.8;
+  line-height: 1.85;
   letter-spacing: -.01em;
   word-break: keep-all;
   overflow-wrap: break-word;
@@ -133,7 +133,7 @@ section + section::before {
 .serif { font-family: var(--kserif); }
 
 /* --------------------------------------------------------------------------
-   4. Section headings
+   4. Section Headings
    -------------------------------------------------------------------------- */
 .section-title {
   font-family: var(--serif);
@@ -157,6 +157,7 @@ section + section::before {
 }
 
 .section-kicker {
+  font-family: var(--kserif);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: .22em;
@@ -181,7 +182,7 @@ section + section::before {
 }
 
 /* --------------------------------------------------------------------------
-   5. Scroll reveal
+   5. Scroll Reveal
    -------------------------------------------------------------------------- */
 .reveal {
   opacity: 0;
@@ -192,7 +193,7 @@ section + section::before {
 .reveal.is-in { opacity: 1; transform: none; }
 
 /* --------------------------------------------------------------------------
-   7. Cover
+   6. Cover
    -------------------------------------------------------------------------- */
 #main-cover {
   padding: 0;
@@ -229,6 +230,7 @@ section + section::before {
 .main-details { padding: 18px 24px 58px; }
 
 .main-title-sub {
+  font-family: var(--kserif);
   font-size: 13px;
   letter-spacing: .2em;
   text-indent: .2em;
@@ -274,6 +276,7 @@ section + section::before {
 }
 
 .main-title-date {
+  font-family: var(--kserif);
   font-size: 14px;
   color: var(--ink-2);
   letter-spacing: .01em;
@@ -331,7 +334,7 @@ section + section::before {
 }
 
 /* --------------------------------------------------------------------------
-   8. Invitation
+   7. Invitation (Greeting)
    -------------------------------------------------------------------------- */
 #intro-greeting { background-color: var(--surface); }
 
@@ -383,7 +386,7 @@ section + section::before {
   flex-shrink: 0;
   width: 62px;
   text-align: center;
-  font-family: var(--sans);
+  font-family: var(--kserif);
   color: var(--ink-4);
   font-size: 12.5px;
   letter-spacing: .02em;
@@ -417,7 +420,7 @@ section + section::before {
 }
 
 /* --------------------------------------------------------------------------
-   9. Date & Calendar
+   8. Date & Calendar
    -------------------------------------------------------------------------- */
 #wedding-calendar { background-color: var(--surface-2); }
 
@@ -432,10 +435,10 @@ section + section::before {
   margin-bottom: 6px;
 }
 .calendar-time-display {
+  font-family: var(--kserif);
   font-size: 13.5px;
   color: var(--ink-3);
-  letter-spacing: .1em;
-  text-indent: .1em;
+  letter-spacing: .08em;
   margin-bottom: 34px;
 }
 
@@ -452,6 +455,7 @@ section + section::before {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   row-gap: 6px;
+  font-family: var(--kserif);
   font-size: 13px;
   color: var(--ink-2);
 }
@@ -518,6 +522,7 @@ section + section::before {
   font-variant-numeric: tabular-nums;
 }
 .countdown-label {
+  font-family: var(--kserif);
   font-size: 9.5px;
   font-weight: 500;
   letter-spacing: .16em;
@@ -536,7 +541,7 @@ section + section::before {
 .countdown-caption b { color: var(--accent); font-weight: 500; }
 
 /* --------------------------------------------------------------------------
-   10. Location
+   9. Location
    -------------------------------------------------------------------------- */
 #wedding-location { background-color: var(--surface); }
 
@@ -549,10 +554,12 @@ section + section::before {
   margin-bottom: 8px;
 }
 .hall-address-text {
+  font-family: var(--kserif);
   font-size: 14px;
   color: var(--ink-3);
 }
 .hall-info-text {
+  font-family: var(--kserif);
   font-size: 12.5px;
   color: var(--ink-4);
   margin-bottom: 26px;
@@ -584,6 +591,7 @@ section + section::before {
   background: rgba(255, 255, 255, .94);
   backdrop-filter: blur(8px);
   color: var(--ink-2);
+  font-family: var(--kserif);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: .01em;
@@ -602,6 +610,7 @@ section + section::before {
   justify-content: center;
   gap: 7px;
   padding: 15px 12px;
+  font-family: var(--kserif);
   font-size: 13.5px;
   font-weight: 500;
   letter-spacing: .01em;
@@ -622,8 +631,9 @@ section + section::before {
 /* Route details */
 .route-details {
   text-align: left;
+  font-family: var(--kserif);
   font-size: 14px;
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
 .route-block + .route-block {
@@ -652,12 +662,14 @@ section + section::before {
 }
 
 .route-desc {
+  font-family: var(--kserif);
   color: var(--ink-2);
   font-size: 13.5px;
   margin-left: 13px;
 }
 
 .route-subcategory {
+  font-family: var(--kserif);
   font-weight: 500;
   font-size: 13.5px;
   color: var(--ink-2);
@@ -667,16 +679,17 @@ section + section::before {
   border-left: 1px solid var(--line);
 }
 .route-subcategory-contents {
+  font-family: var(--kserif);
   font-size: 13px;
   color: var(--ink-3);
   margin-left: 13px;
   padding-left: 11px;
   border-left: 1px solid var(--line);
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 /* --------------------------------------------------------------------------
-   11. Notice
+   10. Notice
    -------------------------------------------------------------------------- */
 #notice-sections { background-color: var(--surface-2); }
 
@@ -695,8 +708,9 @@ section + section::before {
   display: flex;
   gap: 12px;
   padding: 16px 0;
+  font-family: var(--kserif);
   font-size: 13.5px;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--ink-2);
 }
 .notice-list li + li { border-top: 1px solid var(--line-soft); }
@@ -718,7 +732,7 @@ section + section::before {
 .notice-list { counter-reset: notice; }
 
 /* --------------------------------------------------------------------------
-   12. Gallery
+   11. Gallery
    -------------------------------------------------------------------------- */
 #gallery-section { background-color: var(--surface); }
 
@@ -761,6 +775,7 @@ section + section::before {
   align-items: center;
   gap: 8px;
   padding: 12px 28px;
+  font-family: var(--kserif);
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: .1em;
@@ -788,7 +803,7 @@ section + section::before {
 }
 
 /* --------------------------------------------------------------------------
-   13. Lightbox
+   12. Lightbox (Modal)
    -------------------------------------------------------------------------- */
 .modal-overlay {
   position: fixed;
@@ -868,7 +883,7 @@ section + section::before {
 .next-btn { right: 14px; }
 
 /* --------------------------------------------------------------------------
-   14. Accounts
+   13. Accounts
    -------------------------------------------------------------------------- */
 #gift-accounts { background-color: var(--surface-2); }
 
@@ -942,12 +957,14 @@ section + section::before {
 .account-details-row:last-child { border-bottom: none; }
 
 .account-role {
+  font-family: var(--kserif);
   font-size: 11.5px;
   color: var(--ink-4);
   letter-spacing: .04em;
   line-height: 1.6;
 }
 .account-number {
+  font-family: var(--kserif);
   font-size: 14px;
   font-weight: 500;
   color: var(--ink);
@@ -960,6 +977,7 @@ section + section::before {
 .btn-clipboard {
   flex-shrink: 0;
   padding: 7px 13px;
+  font-family: var(--kserif);
   font-size: 11.5px;
   font-weight: 500;
   letter-spacing: .04em;
@@ -971,7 +989,7 @@ section + section::before {
 .btn-clipboard:hover { background-color: var(--accent); color: #fff; }
 
 /* --------------------------------------------------------------------------
-   15. Footer
+   14. Footer
    -------------------------------------------------------------------------- */
 footer {
   padding: 56px 24px 64px;
@@ -1000,6 +1018,7 @@ footer::before {
   align-items: center;
   gap: 7px;
   padding: 11px 22px;
+  font-family: var(--kserif);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: .04em;
@@ -1022,7 +1041,7 @@ footer::before {
 }
 
 /* --------------------------------------------------------------------------
-   16. Music floating button
+   15. Music Floating Button
    -------------------------------------------------------------------------- */
 .music-floating-btn {
   position: fixed;
@@ -1068,7 +1087,7 @@ footer::before {
 }
 
 /* --------------------------------------------------------------------------
-   17. Toast
+   16. Toast
    -------------------------------------------------------------------------- */
 .toast {
   position: fixed;
@@ -1081,6 +1100,7 @@ footer::before {
   background: rgba(27, 25, 23, .92);
   backdrop-filter: blur(8px);
   color: #fff;
+  font-family: var(--kserif);
   font-size: 12.5px;
   font-weight: 400;
   letter-spacing: .02em;
@@ -1092,7 +1112,7 @@ footer::before {
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 
 /* --------------------------------------------------------------------------
-   18. Responsive
+   17. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 380px) {
   section { padding: 72px 20px; }
@@ -1119,7 +1139,7 @@ footer::before {
 }
 
 /* --------------------------------------------------------------------------
-   19. Accessibility — reduced motion
+   18. Accessibility — Reduced Motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
