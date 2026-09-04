@@ -1,311 +1,457 @@
-// <!-- ======================================================= -->
-// <!-- 3. 자바스크립트 (오류 추적용 안내창 장착) -->
-// <!-- ======================================================= -->
-document.addEventListener('DOMContentLoaded', function() {
-const bgm = document.getElementById('my-bgm');
-const musicBtn = document.getElementById('music-toggle-btn');
-const musicIcon = document.getElementById('music-btn-icon');
+/* ==========================================================================
+   구재관 ♥ 이채희  |  2026.11.14
+   Wedding Invitation — script
+   ========================================================================== */
+(function () {
+  'use strict';
 
-if (!bgm || !musicBtn) return;
+  var WEDDING = new Date(2026, 10, 14, 17, 50, 0);   // 2026-11-14 17:50 (월은 0부터)
+  var VENUE   = { lat: 35.8252300, lng: 128.620010, name: '호텔수성 수성스퀘어' };
 
-// 💡 음악을 재생하는 핵심 함수
-function playBGM() {
-    if (bgm.paused) {
-    bgm.play()
-        .then(() => {
-        // 재생 성공 시 버튼 애니메이션 및 아이콘 변경
-        musicBtn.classList.add('playing');
-        musicIcon.textContent = '⏸️';
-        // 재생에 성공했으므로 더 이상 스크롤/터치를 감지할 필요가 없어서 이벤트를 제거합니다.
-        removeUnlockEvents();
-        })
-        .catch(err => {
-        console.log("재생 대기 중...", err);
-        });
+  var prefersReduced = window.matchMedia &&
+                       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ------------------------------------------------------------------------
+     0. 토스트 (alert 대체)
+     ------------------------------------------------------------------------ */
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+
+  function toast(message) {
+    if (!toastEl) { return; }
+    toastEl.textContent = message;
+    toastEl.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('is-visible');
+    }, 1900);
+  }
+
+  /* ------------------------------------------------------------------------
+     1. 클립보드 복사 — [data-copy] 를 가진 모든 버튼에 자동 적용
+     ------------------------------------------------------------------------ */
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
     }
-}
+    // 구형 브라우저 / http 환경 대비 폴백
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      ok ? resolve() : reject(new Error('copy failed'));
+    });
+  }
 
-// 감지 이벤트 해제 함수
-function removeUnlockEvents() {
-    document.removeEventListener('scroll', playBGM);
-    document.removeEventListener('touchstart', playBGM);
-    document.removeEventListener('click', playBGM);
-}
+  document.addEventListener('click', function (e) {
+    if (!e.target || !e.target.closest) { return; }
+    var btn = e.target.closest('[data-copy]');
+    if (!btn) { return; }
+    e.preventDefault();
+    var label = btn.getAttribute('data-copy-label') || '복사되었습니다';
+    copyText(btn.getAttribute('data-copy'))
+      .then(function () { toast(label); })
+      .catch(function () { toast('복사에 실패했습니다. 직접 선택해 주세요.'); });
+  });
 
-// 1. 하객이 들어와서 스크롤을 내리거나, 화면을 만지거나, 클릭하면 즉시 음악 실행!
-document.addEventListener('scroll', playBGM);
-document.addEventListener('touchstart', playBGM);
-document.addEventListener('click', playBGM);
+  /* ------------------------------------------------------------------------
+     2. 배경음악
+     ------------------------------------------------------------------------ */
+  var bgm      = document.getElementById('my-bgm');
+  var musicBtn = document.getElementById('music-toggle-btn');
 
-// 2. 혹시나 브라우저 환경이 처음부터 자동 재생을 허용하는 상태인지 1차 시도
-bgm.play()
-    .then(() => {
-    musicBtn.classList.add('playing');
-    musicIcon.textContent = '⏸️';
-    removeUnlockEvents(); // 성공 시 이벤트 해제
-    })
-    .catch(err => {
-    // 차단되어도 경고창을 띄우지 않고, 콘솔로그만 남긴 채 1번 이벤트(스크롤)를 기다립니다.
-    console.log("초기 자동재생 차단됨 -> 하객의 스크롤/터치 액션을 대기합니다.");
+  function startMusic() {
+    if (!bgm) { return; }
+    var p = bgm.play();
+    if (p && typeof p.then === 'function') {
+      p.then(function () {
+        if (musicBtn) { musicBtn.classList.add('playing'); }
+      }).catch(function () {
+        // 브라우저가 막았을 뿐이므로 조용히 넘어가고 다음 제스처를 기다린다
+      });
+    } else if (musicBtn) {
+      musicBtn.classList.add('playing');
+    }
+  }
+
+  if (bgm && musicBtn) {
+    musicBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (bgm.paused) {
+        bgm.play().then(function () {
+          musicBtn.classList.add('playing');
+        }).catch(function () {
+          toast('음악을 재생할 수 없습니다.');
+        });
+      } else {
+        bgm.pause();
+        musicBtn.classList.remove('playing');
+      }
     });
 
-// 🎵 우측 하단 고정 버튼을 직접 클릭했을 때 (재생/일시정지 토글)
-musicBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    removeUnlockEvents(); // 사용자가 수동으로 버튼을 조작했으므로 자동 재생 감지 종료
+    bgm.addEventListener('pause', function () { musicBtn.classList.remove('playing'); });
+    bgm.addEventListener('play',  function () { musicBtn.classList.add('playing'); });
 
-    if (bgm.paused) {
-    bgm.play();
-    musicBtn.classList.add('playing');
-    musicIcon.textContent = '⏸️';
-    } else {
-    bgm.pause();
-    musicBtn.classList.remove('playing');
-    musicIcon.textContent = '🎵';
+    // 브라우저 자동재생 정책상 첫 사용자 동작(터치/클릭/스크롤) 때 재생을 시도한다
+    var once = function () {
+      startMusic();
+      document.removeEventListener('click', once);
+      document.removeEventListener('touchstart', once);
+      document.removeEventListener('scroll', once);
+    };
+    document.addEventListener('click', once);
+    document.addEventListener('touchstart', once, { passive: true });
+    document.addEventListener('scroll', once, { passive: true });
+  }
+
+  /* ------------------------------------------------------------------------
+     3. 스크롤 페이드인
+     ------------------------------------------------------------------------ */
+  function initReveal() {
+    var items = document.querySelectorAll('.reveal');
+    if (!items.length) { return; }
+
+    if (prefersReduced || !('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('is-in'); });
+      return;
     }
-});
-});
 
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
-// 갤러리 관련
-document.addEventListener('DOMContentLoaded', function() {
-    const toggleBtn = document.getElementById('gallery-toggle-btn');
-    // 추가 이미지들을 모두 가져옵니다.
-    const extraItems = document.querySelectorAll('.gallery-item.extra-item');
-    const galleryContainer = document.querySelector('.gallery-container');
+    items.forEach(function (el) { io.observe(el); });
+  }
 
-    if (toggleBtn && extraItems.length > 0) {
-    toggleBtn.addEventListener('click', function() {
-        // 첫 번째 추가 이미지가 숨겨져 있는지 확인 (true/false)
-        const isHidden = extraItems[0].classList.contains('hidden');
+  /* ------------------------------------------------------------------------
+     4. 카운트다운 + D-Day
+     ------------------------------------------------------------------------ */
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
 
-        // 상태에 따라 hidden 클래스를 넣었다 뺐다 토글합니다.
-        extraItems.forEach(item => {
-        if (isHidden) {
-            item.classList.remove('hidden');
+  function tickCountdown() {
+    var now  = new Date();
+    var diff = WEDDING.getTime() - now.getTime();
+
+    var days, hours, mins, secs;
+    if (diff > 0) {
+      days  = Math.floor(diff / 86400000);
+      hours = Math.floor(diff % 86400000 / 3600000);
+      mins  = Math.floor(diff % 3600000 / 60000);
+      secs  = Math.floor(diff % 60000 / 1000);
+    } else {
+      days = hours = mins = secs = 0;
+    }
+
+    var set = function (id, v) {
+      var el = document.getElementById(id);
+      if (el) { el.textContent = pad(v); }
+    };
+    set('cd-days', days); set('cd-hours', hours); set('cd-min', mins); set('cd-sec', secs);
+
+    // 자정 기준 D-Day (시각과 무관하게 '며칠 남았는지'를 표기)
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var wd    = new Date(2026, 10, 14); wd.setHours(0, 0, 0, 0);
+    var dday  = Math.round((wd.getTime() - today.getTime()) / 86400000);
+
+    var badge = document.getElementById('dday-counter');
+    if (badge) {
+      badge.textContent = dday > 0 ? 'D-' + dday : (dday === 0 ? 'D-DAY' : 'Thank You');
+    }
+
+    var caption = document.getElementById('countdown-caption');
+    if (caption) {
+      if (dday > 0) {
+        caption.innerHTML = '재관 &amp; 채희의 결혼식까지 <b>' + dday + '일</b> 남았습니다.';
+      } else if (dday === 0) {
+        caption.innerHTML = '오늘은 <b>재관 &amp; 채희</b>의 결혼식입니다.';
+      } else {
+        caption.innerHTML = '함께해 주신 모든 분들께 <b>감사드립니다.</b>';
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     5. 갤러리 더보기 / 접기
+     ------------------------------------------------------------------------ */
+  function initGalleryToggle() {
+    var btn    = document.getElementById('gallery-toggle-btn');
+    var extras = document.querySelectorAll('.gallery-item.extra-item');
+    var wrap   = document.getElementById('gallery-section');
+    if (!btn || !extras.length) { return; }
+
+    btn.addEventListener('click', function () {
+      var opening = extras[0].classList.contains('hidden');
+
+      extras.forEach(function (item) {
+        item.classList.toggle('hidden', !opening);
+        if (opening) { item.classList.add('reveal', 'is-in'); }
+      });
+
+      btn.textContent = opening ? '접기' : '사진 더보기';
+      btn.classList.toggle('is-open', opening);
+
+      refreshLightbox();
+
+      if (!opening && wrap) {
+        wrap.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     6. 라이트박스 (클릭 · 키보드 · 스와이프)
+     ------------------------------------------------------------------------ */
+  var modal   = document.getElementById('galleryModal');
+  var modalImg = document.getElementById('modalImage');
+  var counter = document.getElementById('modalCounter');
+  var images  = [];
+  var index   = 0;
+
+  function visibleImages() {
+    return Array.prototype.filter.call(
+      document.querySelectorAll('.gallery-grid .gallery-item'),
+      function (item) { return !item.classList.contains('hidden'); }
+    ).map(function (item) { return item.querySelector('img'); })
+     .filter(Boolean);
+  }
+
+  function refreshLightbox() { images = visibleImages(); }
+
+  function render() {
+    if (!images[index]) { return; }
+    modalImg.classList.add('is-swapping');
+    var src = images[index].src;
+    var alt = images[index].alt;
+    var pre = new Image();
+    pre.onload = pre.onerror = function () {
+      modalImg.src = src;
+      modalImg.alt = alt;
+      modalImg.classList.remove('is-swapping');
+    };
+    pre.src = src;
+    if (counter) { counter.textContent = (index + 1) + ' / ' + images.length; }
+  }
+
+  function openModal(i) {
+    refreshLightbox();
+    index = i;
+    render();
+    modal.classList.add('is-open');
+    requestAnimationFrame(function () { modal.classList.add('is-visible'); });
+    document.body.classList.add('is-locked');
+  }
+
+  function closeModal() {
+    modal.classList.remove('is-visible');
+    setTimeout(function () { modal.classList.remove('is-open'); }, 300);
+    document.body.classList.remove('is-locked');
+  }
+
+  function step(delta) {
+    if (!images.length) { return; }
+    index = (index + delta + images.length) % images.length;
+    render();
+  }
+
+  function initLightbox() {
+    if (!modal || !modalImg) { return; }
+    refreshLightbox();
+
+    // 이벤트 위임 — '더보기'로 추가된 사진에도 자동 적용된다
+    var grid = document.querySelector('.gallery-grid');
+    if (grid) {
+      grid.addEventListener('click', function (e) {
+        var img = e.target.closest('.gallery-item img');
+        if (!img) { return; }
+        refreshLightbox();
+        var i = images.indexOf(img);
+        if (i > -1) { openModal(i); }
+      });
+    }
+
+    modal.querySelector('.prev-btn').addEventListener('click', function (e) { e.stopPropagation(); step(-1); });
+    modal.querySelector('.next-btn').addEventListener('click', function (e) { e.stopPropagation(); step(1); });
+    modal.querySelector('.modal-close').addEventListener('click', function (e) { e.stopPropagation(); closeModal(); });
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) { closeModal(); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!modal.classList.contains('is-open')) { return; }
+      if (e.key === 'ArrowLeft')  { step(-1); }
+      if (e.key === 'ArrowRight') { step(1); }
+      if (e.key === 'Escape')     { closeModal(); }
+    });
+
+    // 스와이프
+    var startX = 0, startY = 0, tracking = false;
+    modal.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { tracking = false; return; }
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      tracking = true;
+    }, { passive: true });
+
+    modal.addEventListener('touchend', function (e) {
+      if (!tracking) { return; }
+      tracking = false;
+      var t  = e.changedTouches[0];
+      var dx = t.clientX - startX;
+      var dy = t.clientY - startY;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+        step(dx < 0 ? 1 : -1);
+      }
+    }, { passive: true });
+  }
+
+  /* ------------------------------------------------------------------------
+     7. 계좌 아코디언
+     ------------------------------------------------------------------------ */
+  function initAccordion() {
+    document.querySelectorAll('.toggle-menu-btn[data-panel]').forEach(function (btn) {
+      var panel = document.getElementById(btn.getAttribute('data-panel'));
+      if (!panel) { return; }
+
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') === 'true';
+
+        if (open) {
+          panel.style.maxHeight = '0px';
+          panel.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
         } else {
-            item.classList.add('hidden');
+          panel.classList.add('is-open');
+          panel.style.maxHeight = (panel.scrollHeight + 24) + 'px';
+          btn.setAttribute('aria-expanded', 'true');
         }
+      });
+    });
+
+    // 폰트 로딩 등으로 높이가 변할 수 있어 열려 있는 패널은 재계산
+    window.addEventListener('resize', function () {
+      document.querySelectorAll('.toggle-panel.is-open').forEach(function (panel) {
+        panel.style.maxHeight = (panel.scrollHeight + 24) + 'px';
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     8. 링크 공유
+     ------------------------------------------------------------------------ */
+  function initShare() {
+    var btn = document.getElementById('share-btn');
+    if (!btn) { return; }
+    btn.addEventListener('click', function () {
+      var url = location.href;
+      if (navigator.share) {
+        navigator.share({
+          title: '구재관 ♥ 이채희 결혼식에 초대합니다',
+          text: '2026.11.14 (토) 오후 5시 50분 · 호텔수성 수성스퀘어 아이비홀',
+          url: url
+        }).catch(function () { /* 사용자가 취소한 경우 */ });
+        return;
+      }
+      copyText(url)
+        .then(function () { toast('청첩장 링크가 복사되었습니다'); })
+        .catch(function () { toast('복사에 실패했습니다.'); });
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     9. 네이버 지도 (스크립트 미로드 시에도 페이지가 죽지 않도록 방어)
+     ------------------------------------------------------------------------ */
+  function initMap() {
+    var mapEl = document.getElementById('map');
+    var goBtn = document.getElementById('goWeddingHall');
+    if (!mapEl) { return; }
+
+    if (typeof naver === 'undefined' || !naver.maps) {
+      mapEl.innerHTML =
+        '<div style="height:300px;display:flex;flex-direction:column;gap:6px;' +
+        'align-items:center;justify-content:center;color:#8d8578;font-size:13px;">' +
+        '<span style="font-size:20px;">📍</span>' + VENUE.name +
+        '<span style="font-size:12px;color:#b6ada0;">대구광역시 수성구 용학로 92-4</span></div>';
+      if (goBtn) { goBtn.style.display = 'none'; }
+      return;
+    }
+
+    var center = new naver.maps.LatLng(VENUE.lat, VENUE.lng);
+
+    var map = new naver.maps.Map(mapEl, {
+      center: center,
+      zoom: 16,
+      minZoom: 7,
+      zoomAnimation: true, // 부드러운 줌 전환 애니메이션 활성화
+      zoomControl: true,
+      zoomControlOptions: {
+        position: naver.maps.Position.TOP_RIGHT,
+        style: naver.maps.ZoomControlStyle.SMALL
+      },
+      scaleControl: false,
+      logoControl: false,
+      mapDataControl: false
+    });
+
+    var marker = new naver.maps.Marker({ position: center, map: map });
+
+    var infoWindow = new naver.maps.InfoWindow({
+      borderWidth: 0,
+      disableAnchor: false,
+      backgroundColor: 'transparent',
+      pixelOffset: new naver.maps.Point(0, -10),
+      content:
+        '<div style="padding:9px 15px;border-radius:20px;background:#fffefc;' +
+        'box-shadow:0 4px 14px rgba(60,46,34,.2);font-family:\'Noto Sans KR\',sans-serif;' +
+        'font-size:12.5px;font-weight:500;color:#1b1917;letter-spacing:-.01em;white-space:nowrap;">' +
+        '📍 ' + VENUE.name + '</div>'
+    });
+
+    infoWindow.open(map, marker);
+    naver.maps.Event.addListener(marker, 'click', function () {
+      infoWindow.open(map, marker);
+    });
+
+    if (goBtn) {
+      goBtn.addEventListener('click', function () {
+        map.morph(center, 16, { duration: 500, easing: 'easeOutCubic'});
+        naver.maps.Event.once(map, 'idle', function () {
+          infoWindow.open(map, marker);
         });
-
-        // 버튼 글자 바꾸기
-        this.textContent = isHidden ? '접기' : '더보기';
-        
-        // 중요: '접기'를 눌렀을 때 화면이 붕 뜨지 않도록 갤러리 상단으로 부드럽게 올려줍니다.
-        if (!isHidden && galleryContainer) {
-        galleryContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
+      });
     }
-});
+  }
 
+  /* ------------------------------------------------------------------------
+     실행
+     ------------------------------------------------------------------------ */
+  function boot() {
+    initReveal();
+    initGalleryToggle();
+    initLightbox();
+    initAccordion();
+    initShare();
+    initMap();
 
-document.addEventListener("DOMContentLoaded", function() {
-    const modal = document.getElementById("galleryModal");
-    const modalImg = document.getElementById("modalImage");
-    const closeBtn = document.querySelector(".modal-close");
-    const prevBtn = document.querySelector(".prev-btn");
-    const nextBtn = document.querySelector(".next-btn");
+    tickCountdown();
+    setInterval(tickCountdown, 1000);
+  }
 
-    let currentIndex = 0; // 현재 보고 있는 이미지의 인덱스
-    let allImages = [];   // 전체 이미지 배열을 담을 변수
-
-    // 1. 이미지 클릭 시 모달 열기
-    function initGallery() {
-        // 현재 갤러리 그리드 안에 있는 모든 이미지를 갱신
-        allImages = Array.from(document.querySelectorAll(".gallery-grid .gallery-item img"));
-
-        allImages.forEach((img, index) => {
-            // 중복 등록 방지를 위해 기존 이벤트 제거 후 재등록 (더보기 버튼 대응용)
-            img.removeEventListener("click", openModal);
-            img.addEventListener("click", () => openModal(index));
-        });
-    }
-
-    function openModal(index) {
-        currentIndex = index;
-        updateModalImage();
-        modal.style.display = "flex";
-        
-        // 💡 모달 열릴 때 바디 스크롤 막기 (선택 사항)
-        document.body.style.overflow = 'hidden'; 
-    }
-
-    // 2. 모달 이미지 업데이트 (부드러운 전환 효과)
-    function updateModalImage() {
-        // 이미지를 살짝 투명하게 만들었다가 소스를 바꾸고 다시 보여줌
-        modalImg.style.opacity = "0.3";
-        
-        // 브라우저가 이미지를 비동기로 로드하는 시간을 고려하여 아주 잠시 대기
-        setTimeout(() => {
-            modalImg.src = allImages[currentIndex].src;
-            modalImg.alt = allImages[currentIndex].alt;
-            modalImg.style.opacity = "1";
-        }, 100); 
-    }
-
-    // 3. 이전 / 다음 사진 이동 로직 (무한 루프)
-    function showPrev() {
-        currentIndex = (currentIndex === 0) ? allImages.length - 1 : currentIndex - 1;
-        updateModalImage();
-    }
-
-    function showNext() {
-        currentIndex = (currentIndex === allImages.length - 1) ? 0 : currentIndex + 1;
-        updateModalImage();
-    }
-
-    // 버튼 클릭 이벤트 (💡 스와이프 대신 이 버튼들만 사용됩니다)
-    prevBtn.addEventListener("click", (e) => { 
-        e.stopPropagation(); // 모달 배경 클릭 이벤트 전파 막기
-        showPrev(); 
-    });
-    
-    nextBtn.addEventListener("click", (e) => { 
-        e.stopPropagation(); // 모달 배경 클릭 이벤트 전파 막기
-        showNext(); 
-    });
-
-    // 4. 키보드 방향키 이벤트 (PC 사용자 편의성 유지)
-    document.addEventListener("keydown", function(e) {
-        if (modal.style.display === "flex") {
-            if (e.key === "ArrowLeft") showPrev();
-            if (e.key === "ArrowRight") showNext();
-            if (e.key === "Escape") closeModal(); // ESC로 닫기
-        }
-    });
-
-    // 5. 닫기 로직
-    function closeModal() {
-        modal.style.display = "none";
-        
-        // 💡 모달 닫힐 때 바디 스크롤 원복 (선택 사항)
-        document.body.style.overflow = ''; 
-    }
-    
-    closeBtn.addEventListener("click", closeModal);
-    
-    modal.addEventListener("click", function(e) {
-        // 배경을 클릭했을 때만 닫히도록 체크 (이미지나 버튼 클릭 시 닫힘 방지)
-        if (e.target === modal) closeModal();
-    });
-
-    // 최초 실행
-    initGallery();
-});
-
-
-
-// 아코디언 토글 메뉴 작동 함수
-function clickToggle(panelId) {
-    const panel = document.getElementById(panelId);
-    const arrow = document.getElementById('arrow-' + panelId);
-
-    if (panel.style.display === "block") {
-        panel.style.display = "none";
-        arrow.textContent = "▼";
-    } else {
-        panel.style.display = "block";
-        arrow.textContent = "▲";
-    }
-}
-
-// 계좌번호 클립보드 복사 함수
-function copyClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert("성공적으로 복사되었습니다.");
-    }).catch(err => {
-        alert("복사에 실패했습니다. 직접 선택하여 복사해 주세요.");
-    });
-}
-
-// 디데이 카운트다운 기능 추가 (예식일 기준 실시간 계산)
-function calculateDDay() {
-// 💡 1. 결혼식 날짜 설정 (아이폰 등 모바일 오류 방지를 위해 숫자로 세팅)
-// 자바스크립트는 월(Month)이 0부터 시작하므로, 7월은 '6'으로 적어야 정확합니다.
-const weddingDate = new Date(2026, 11-1, 14); 
-weddingDate.setHours(0, 0, 0, 0); // 시, 분, 초, 밀리초를 0으로 초기화
-
-// 💡 2. 현재 날짜 설정 및 시간 초기화
-const now = new Date();
-now.setHours(0, 0, 0, 0); // 현재 시간도 똑같이 0시 0분 0초로 강제 고정
-
-// 3. 두 날짜의 차이 계산 (밀리초 단위)
-const distance = weddingDate.getTime() - now.getTime();
-
-// 4. 정확히 하루 단위(24시간)로 나누어 떨어지게 계산
-const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-const element = document.getElementById("dday-counter");
-
-if (!element) return; // 카운터 태그가 없을 때를 위한 예외 처리
-
-// 5. 조건에 따른 텍스트 출력
-if (days > 0) {
-    element.textContent = "D-" + days;
-} else if (days === 0) {
-    element.textContent = "D-Day";
-} else {
-    element.textContent = "감사합니다~";
-}
-}
-
-// 페이지 로드 시 디데이 계산 실행
-calculateDDay();
-
-
-// 동적 naver api
-var map = new naver.maps.Map('map', {
-    center: new naver.maps.LatLng(35.8252300,128.620010),
-    zoom: 16, //지도의 초기 줌 레벨
-    minZoom: 7, //지도의 최소 줌 레벨
-    zoomControl: true,
-    zoomControlOptions: { //줌 컨트롤의 옵션
-    position: naver.maps.Position.TOP_RIGHT},
-    scaleControl: false,
-    logoControl: false,
-    mapDataControl: false,
-});
-
-var marker = new naver.maps.Marker({
-    position: new naver.maps.LatLng(35.8252300,128.620010),
-    map: map,
-});
-
-
-var wedding = new naver.maps.LatLng(35.8252300,128.620010);
-
-document.getElementById("goWeddingHall").addEventListener("click", function () {
-    map.morph(wedding, 16);
-
-    naver.maps.Event.once(map, "idle", function () {
-        infoWindow.open(map, marker);
-    });
-});
-
-
-// infowindow 추가
-var infoWindow = new naver.maps.InfoWindow({
-    borderWidth: 0,
-    disableAnchor: false,
-    backgroundColor: "#fff",
-    pixelOffset: new naver.maps.Point(0, -8),
-    content: `
-        <div style="
-            padding:8px 14px;
-            border-radius:18px;
-            background:#fff;
-            box-shadow:0 2px 8px rgba(0,0,0,.18);
-            font-size:13px;
-            font-weight:600;
-            color:#444;
-            white-space:nowrap;
-        ">
-            📍 호텔수성 수성스퀘어
-        </div>
-    `
-});
-
-// 항상 표시
-infoWindow.open(map, marker);
-
-var wedding = new naver.maps.LatLng(35.8252300,128.620010);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();

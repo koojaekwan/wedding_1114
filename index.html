@@ -2,251 +2,304 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>신랑 구재관 & 신부 이채희 결혼식에 초대합니다</title>
-    
-    <!-- 카카오톡, 네이버 링크 공유 시 보여질 미리보기 화면 설정 (OG 태그) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="신랑 구재관 & 신부 이채희 결혼식에 초대합니다">
-    <meta property="og:description" content="2026.11.12 (토) 오후 5시 50분 | 호텔수성 수성스퀘어 아이비홀">
-    <!-- <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop"> -->
-    <meta property="og:image" content="./pic/4.jpg?q=80&w=600&auto=format&fit=crop">
-    <meta property="og:url" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>신랑 구재관 &amp; 신부 이채희 결혼식에 초대합니다</title>
+    <meta name="description" content="2026년 11월 14일 토요일 오후 5시 50분 | 호텔수성 수성스퀘어 2층 아이비홀">
+    <meta name="theme-color" content="#f2efe9">
 
-    <!-- 구글 웹 폰트 적용 (감성적인 고운바탕 & 정갈한 노토산스) -->
+    <!-- 카카오톡 / 네이버 링크 공유 시 보여질 미리보기 (OG 태그) -->
+    <!-- 💡 배포 후에는 og:image / og:url 을 반드시 전체(절대) 주소로 바꿔주세요. -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="신랑 구재관 &amp; 신부 이채희 결혼식에 초대합니다">
+    <meta property="og:description" content="2026.11.14 (토) 오후 5시 50분 | 호텔수성 수성스퀘어 2층 아이비홀">
+    <meta property="og:image" content="https://koojaekwan.github.io/wedding_1114/pic/4.jpg">
+    <meta property="og:url" content="https://koojaekwan.github.io/wedding_1114/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- 웹 폰트 : Cormorant Garamond(영문 디스플레이) + Noto Serif/Sans KR -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;600&family=Noto+Serif+KR:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
-    <!-- naver api -->
+
+    <!-- 네이버 지도 API -->
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=41c57swyza"></script>
 </head>
 
 <body>
 
+<!-- 데스크톱 배경 (모바일에서는 표시되지 않음) -->
+<div class="page-backdrop" aria-hidden="true"></div>
 
-<!-- 화면 우측 하단에 고정될 음악 버튼 -->
-<button id="music-toggle-btn" class="music-floating-btn" >
-  <span id="music-btn-icon">🎵</span>
+<!-- ===================== 배경음악 ===================== -->
+<button id="music-toggle-btn" class="music-floating-btn" aria-label="배경음악 재생/일시정지">
+    <span class="eq-bar"></span>
+    <span class="eq-bar"></span>
+    <span class="eq-bar"></span>
+    <span class="eq-bar"></span>
 </button>
+<audio id="my-bgm" src="maybe.mp3" loop preload="none"></audio>
 
-<!-- 배경음악 파일 (원하는 mp3 파일 경로를 넣어주세요. loop는 무한반복) -->
-<audio id="my-bgm" src="maybe.mp3" loop></audio>
+<!-- 복사 알림 토스트 -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 
 <div class="container">
-    
-    <!-- 1. 메인 커버 섹션 -->
+
+    <!-- ===================== 1. 메인 커버 ===================== -->
     <section id="main-cover">
         <div class="cover-img-box">
-            <img class="cover-img" src="./pic/4.jpg?q=80&w=600&auto=format&fit=crop" alt="Wedding Main">
+            <img class="cover-img" src="./pic/4.jpg" alt="신랑 구재관과 신부 이채희의 웨딩 사진" width="799" height="1211" fetchpriority="high">
         </div>
+
         <div class="main-details">
-            <p class="main-title-sub serif">우리 두 사람 결혼합니다</p>
-            <p class="main-title-names serif">구재관 ♥ 이채희</p>
-            <p class="main-title-date">2026년 11월 14일 토요일 오후 5시 50분<br>호텔수성 수성스퀘어 2층 아이비홀</p>
-            <div class="dday-box" id="dday-counter">WEDDING DAY</div>
+            <p class="main-title-sub">우리 두 사람, 결혼합니다</p>
+            <p class="main-title-names">구재관 <em>&amp;</em> 이채희</p>
+            <p class="main-title-roman">Jaekwan &nbsp;&middot;&nbsp; Chaehee</p>
+
+            <div class="main-rule"></div>
+
+            <p class="main-title-date">
+                <strong>2026 . 11 . 14 &nbsp;SAT</strong>
+                토요일 오후 5시 50분<br>
+                호텔수성 수성스퀘어 2층 아이비홀
+            </p>
+
+            <div class="dday-box" id="dday-counter">Wedding Day</div>
+            <span class="scroll-cue" aria-hidden="true"></span>
         </div>
     </section>
 
-    <!-- 2. 초대 인사말 섹션 -->
+
+    <!-- ===================== 2. 초대 인사말 ===================== -->
     <section id="intro-greeting">
-        <p class="section-title serif">Invitation</p>
-        <p class="greeting-message serif">
+        <p class="section-title reveal">Invitation</p>
+
+        <p class="greeting-message reveal" style="--reveal-delay:.1s">
             서로에게 가장 편안한 사람이 되어,<br>
             같은 곳을 바라보며 함께 걸어가고자 합니다.<br>
             <br>
             두 사람의 소중한 약속의 순간을<br>
-            기쁜 마음으로 축복해 주시면
-            감사하겠습니다.
+            기쁜 마음으로 축복해 주시면 감사하겠습니다.
         </p>
-        
-    <div class="family-tree">
-        <!-- 신랑 측 -->
-        <div class="family-row">
-            <div class="parents">
-                <b>구승근</b><b>김정옥</b>
+
+        <div class="family-tree reveal" style="--reveal-delay:.2s">
+            <!-- 신랑 측 -->
+            <div class="family-row">
+                <div class="parents"><b>구승근</b><b>김정옥</b></div>
+                <div class="relation">의 아들</div>
+                <div class="child"><b>재관</b></div>
             </div>
-            <div class="relation">의 아들</div>
-            <div class="child"><b>재관</b></div>
-        </div>
-        
-        <!-- 신부 측 -->
-        <div class="family-row">
-            <div class="parents">
-                <!-- 💡 deceased 클래스 및 span 적용 -->
-                <b class="deceased"><span>故</span>이상봉</b><b>이은현</b>
+
+            <!-- 신부 측 -->
+            <div class="family-row">
+                <div class="parents"><b class="deceased"><span>故</span>이상봉</b><b>이은현</b></div>
+                <div class="relation">의 딸</div>
+                <div class="child"><b>채희</b></div>
             </div>
-            <div class="relation">의 딸</div>
-            <div class="child"><b>채희</b></div>
         </div>
-    </div>
     </section>
 
-    <!-- 3. 예식 달력 섹션 -->
+
+    <!-- ===================== 3. 예식 일자 ===================== -->
     <section id="wedding-calendar">
-        <p class="section-title serif">Date</p>
-        <p class="calendar-date-display serif">2026년 11월 14일 토요일<br>오후 5시 50분</p>
-        
-        <div class="mini-calendar">
+        <p class="section-title reveal">Date</p>
+
+        <p class="calendar-date-display reveal" style="--reveal-delay:.08s">2026 . 11 . 14</p>
+        <p class="calendar-time-display reveal" style="--reveal-delay:.12s">토요일 오후 5시 50분</p>
+
+        <div class="mini-calendar reveal" style="--reveal-delay:.18s">
             <div class="grid-calendar">
-                <div class="week-head">일</div><div class="week-head">월</div><div class="week-head">화</div><div class="week-head">수</div><div class="week-head">목</div><div class="week-head">금</div><div class="week-head">토</div>
-                <div class="sun">1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div class="sun">8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div class="wedding-highlight">14</div><div class="sun">15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div class="sun">22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div class="sun">29</div><div>30</div><div></div><div></div><div></div><div></div><div></div>
+                <div class="week-head">SUN</div><div class="week-head">MON</div><div class="week-head">TUE</div><div class="week-head">WED</div><div class="week-head">THU</div><div class="week-head">FRI</div><div class="week-head">SAT</div>
+                <div class="sun">1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
+                <div class="sun">8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div class="wedding-highlight">14</div>
+                <div class="sun">15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+                <div class="sun">22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div>
+                <div class="sun">29</div><div>30</div><div></div><div></div><div></div><div></div><div></div>
             </div>
         </div>
+
+        <!-- 실시간 카운트다운 -->
+        <div class="countdown reveal" style="--reveal-delay:.24s" id="countdown">
+            <div class="countdown-cell"><p class="countdown-num" id="cd-days">00</p><p class="countdown-label">Days</p></div>
+            <div class="countdown-cell"><p class="countdown-num" id="cd-hours">00</p><p class="countdown-label">Hour</p></div>
+            <div class="countdown-cell"><p class="countdown-num" id="cd-min">00</p><p class="countdown-label">Min</p></div>
+            <div class="countdown-cell"><p class="countdown-num" id="cd-sec">00</p><p class="countdown-label">Sec</p></div>
+        </div>
+
+        <p class="countdown-caption reveal" style="--reveal-delay:.3s" id="countdown-caption"></p>
     </section>
 
-    <!-- 4. 오시는 길 및 지도 섹션 -->
+
+    <!-- ===================== 4. 오시는 길 ===================== -->
     <section id="wedding-location">
-        <p class="section-title serif">Location</p>
-        <p class="hall-title serif">호텔수성 수성스퀘어 2층 아이비홀</p>
-        <p class="hall-address-text">대구광역시 수성구 용학로 92-4</p>
-        <p class="hall-info-text">(주차 1,400대 가능 / 3시간 무료)</p>
-        
-        <!-- 지도 플레이스홀더 영역 (배포 후 스크린샷 이미지 등으로 변경 권장) -->
-        <div class="map-area">
-            <!-- <img src="수성스퀘어_약도.jpg" alt="호텔수성 수성스퀘어 오시는 길 약도" class="map-img"> -->
-            <div id="map" style="width:100%;height:400px;"></div>
-            <button type="button" id="goWeddingHall">📍 예식장으로</button>
+        <p class="section-title reveal">Location</p>
+
+        <p class="hall-title reveal" style="--reveal-delay:.06s">호텔수성 수성스퀘어 2층 아이비홀</p>
+        <p class="hall-address-text reveal" style="--reveal-delay:.09s">대구광역시 수성구 용학로 92-4</p>
+        <p class="hall-info-text reveal" style="--reveal-delay:.12s">주차 1,400대 가능 · 3시간 무료</p>
+
+        <div class="map-area reveal" style="--reveal-delay:.16s">
+            <div id="map"></div>
+            <button type="button" id="goWeddingHall">📍 예식장 위치</button>
         </div>
 
-        <div class="navigation-links">
-            <!-- 실제 길찾기 URL 주소로 변경하여 사용 가능합니다 -->
-            <a href="https://map.naver.com/p/directions/-/3AoyMq,2zAZeu,%ED%98%B8%ED%85%94%EC%88%98%EC%84%B1%20%EC%88%98%EC%84%B1%EC%8A%A4%ED%80%98%EC%96%B4,1730058287,PLACE_POI/-/car?c=15.00,0,0,3,dh" target="_blank" class="nav-btn">네이버 지도 - 길찾기</a>
+        <div class="navigation-links reveal" style="--reveal-delay:.2s">
+            <a href="https://map.naver.com/p/directions/-/3AoyMq,2zAZeu,%ED%98%B8%ED%85%94%EC%88%98%EC%84%B1%20%EC%88%98%EC%84%B1%EC%8A%A4%ED%80%98%EC%96%B4,1730058287,PLACE_POI/-/car?c=15.00,0,0,3,dh"
+               target="_blank" rel="noopener" class="nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                네이버 지도로 길찾기
+            </a>
         </div>
 
-        <div class="route-details">            
-            <!-- 동대구IC -->
-            <p class="route-category">동대구IC에서 오시는 길</p>
-            <p class="route-desc">동대구IC에서 두산오거리 방향으로 12KM</p>
+        <div class="route-details">
+            <div class="route-block reveal">
+                <p class="route-category">자가용으로 오시는 길</p>
+                <p class="route-desc">동대구IC → 두산오거리 방향 12km</p>
+                <p class="route-desc">북대구IC → 가창 방면 14km</p>
+                <p class="route-desc">수성IC → 범물 방향 8km</p>
+            </div>
 
-            <!-- 북대구IC -->
-            <p class="route-category">북대구IC에서 오시는 길</p>
-            <p class="route-desc">북대구IC에서 가창방면으로 14KM</p>
+            <div class="route-block reveal">
+                <p class="route-category">대중교통으로 오시는 길</p>
 
-            <!-- 수성IC -->
-            <p class="route-category">수성IC에서 오시는 길</p>
-            <p class="route-desc">수성IC에서 범물방향으로 8KM</p>
+                <p class="route-subcategory">동대구역 &middot; 6.4km</p>
+                <p class="route-subcategory-contents">버스 401, 814 → TBC방송국 하차 (도보 15분)</p>
 
-            <!-- 역에서 오시는 길 (상위) -->
-            <p class="route-category">역에서 오시는 길</p>
+                <p class="route-subcategory">대구역 &middot; 9.5km</p>
+                <p class="route-subcategory-contents">버스 401, 410 → 신천역 4번 출구 → 불교한방병원 하차 (도보 10분)</p>
 
-            <!-- ↙ 하부 카테고리: 동대구역 -->
-            <p class="route-subcategory">동대구역 - 호텔과의 거리 : 6.4KM</p>
-            <p class="route-subcategory-contents">버스 - 401, 814 (TBC방송국 하차, 도보 15분)</p>
-
-            <!-- ↙ 하부 카테고리: 대구역 -->
-            <p class="route-subcategory">대구역 - 호텔과의 거리 : 9.5KM</p>
-            <p class="route-subcategory-contents">버스 - 401, 410 → 신천역 4번 출구 → 불교한방병원 하차 (도보 10분)</p>
-
-            <!-- ↙ 하부 카테고리: 복합환승센터 -->
-            <p class="route-subcategory">동대구 복합환승센터 - 호텔과의 거리: 6.3KM</p>
-            <p class="route-subcategory-contents">버스 - 909 → 신천치안센터 하차(환승) → 410 (호텔수성건너 하차)</p>
+                <p class="route-subcategory">동대구 복합환승센터 &middot; 6.3km</p>
+                <p class="route-subcategory-contents">버스 909 → 신천치안센터 하차 후 환승 → 410 → 호텔수성 건너 하차</p>
+            </div>
         </div>
     </section>
 
-    <!-- 5. notice -->
+
+    <!-- ===================== 5. 안내사항 ===================== -->
     <section id="notice-sections">
-        <p class="section-title serif">Notice</p>
-        <p class="notice-text">1. 연회장은 홀 바로 옆에 위치해 있습니다.</p>
-        <p class="notice-text">2. 연회장은 예식 30분 전부터 이용 가능합니다. (단독 사용)</p>
-        <p class="notice-text">3. 주차 정산기는 홀과 같은 층에 있습니다.</p>
+        <p class="section-title reveal">Notice</p>
+
+        <ul class="notice-list reveal" style="--reveal-delay:.08s">
+            <li>연회장은 홀 바로 옆에 위치해 있습니다.</li>
+            <li>연회장은 예식 30분 전부터 이용 가능합니다. (단독 사용)</li>
+            <li>주차 정산기는 홀과 같은 층에 있습니다.</li>
+        </ul>
     </section>
 
-    <!-- 갤러리 섹션 시작 -->
-    <div class="gallery-container">
-    <h2 class="gallery-title">GALLERY</h2>
-    
-    <div class="gallery-grid">
-        <!-- 처음 노출될 6개 이미지 (1~6) -->
-        <div class="gallery-item"><img src="pic/16.jpg" alt=""></div>
-        <div class="gallery-item"><img src="pic/14.jpg" alt=""></div>
-        <div class="gallery-item"><img src="pic/15.jpg" alt=""></div>
-        <div class="gallery-item"><img src="pic/11.jpg" alt=""></div>
-        <div class="gallery-item"><img src="pic/12.jpg" alt=""></div>
-        <div class="gallery-item"><img src="pic/13.jpg" alt=""></div>
-        
 
-        <!-- 접혀있을 추가 이미지 (7번 이후부터는 extra-item hidden 추가) -->
-        <div class="gallery-item extra-item hidden"><img src="pic/10.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/7.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/8.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/5.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/6.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/3.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/1.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/20.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/18.jpg" alt="" loading="lazy"></div>
-        <div class="gallery-item extra-item hidden"><img src="pic/19.jpg" alt="" loading="lazy"></div>
-    </div>
+    <!-- ===================== 6. 갤러리 ===================== -->
+    <section id="gallery-section">
+        <p class="section-title reveal">Gallery</p>
 
+        <div class="gallery-grid">
+            <!-- 처음 노출되는 6장 -->
+            <div class="gallery-item reveal"><img src="pic/16.jpg" alt="웨딩 사진 1"></div>
+            <div class="gallery-item reveal"><img src="pic/14.jpg" alt="웨딩 사진 2"></div>
+            <div class="gallery-item reveal"><img src="pic/15.jpg" alt="웨딩 사진 3"></div>
+            <div class="gallery-item reveal" style="--reveal-delay:.12s"><img src="pic/11.jpg" alt="웨딩 사진 4"></div>
+            <div class="gallery-item reveal" style="--reveal-delay:.12s"><img src="pic/12.jpg" alt="웨딩 사진 5"></div>
+            <div class="gallery-item reveal" style="--reveal-delay:.12s"><img src="pic/13.jpg" alt="웨딩 사진 6"></div>
 
-    <!-- 더보기 / 접기 버튼 -->
-    <button id="gallery-toggle-btn" class="gallery-btn">더보기</button>
-    </div>
+            <!-- '더보기'로 펼쳐지는 사진 -->
+            <div class="gallery-item reveal" style="--reveal-delay:.24s"><img src="pic/10.jpg" alt="웨딩 사진 7" loading="lazy"></div>
+            <div class="gallery-item reveal" style="--reveal-delay:.24s"><img src="pic/7.jpg" alt="웨딩 사진 8" loading="lazy"></div>
+            <div class="gallery-item reveal" style="--reveal-delay:.24s"><img src="pic/8.jpg" alt="웨딩 사진 9" loading="lazy"></div>
+            <div class="gallery-item extra-item hidden"><img src="pic/5.jpg"  alt="웨딩 사진 10" loading="lazy"></div>
+            <div class="gallery-item extra-item hidden"><img src="pic/6.jpg"  alt="웨딩 사진 11" loading="lazy"></div>
+            <div class="gallery-item extra-item hidden"><img src="pic/3.jpg"  alt="웨딩 사진 12" loading="lazy"></div>
+            <div class="gallery-item extra-item hidden"><img src="pic/1.jpg"  alt="웨딩 사진 13" loading="lazy"></div>
+            <div class="gallery-item extra-item hidden"><img src="pic/20.jpg" alt="웨딩 사진 14" loading="lazy"></div>
+            <div class="gallery-item extra-item hidden"><img src="pic/18.jpg" alt="웨딩 사진 15" loading="lazy"></div>
+            <div class="gallery-item extra-item hidden"><img src="pic/19.jpg" alt="웨딩 사진 16" loading="lazy"></div>
+        </div>
 
-    <!-- 모달 팝업 구조 수정 -->
-    <div id="galleryModal" class="modal-overlay">
-        <span class="modal-close">&times;</span>
-        
-        <!-- 💡 좌우 이동 버튼 추가 -->
-        <button class="modal-nav prev-btn">&#10094;</button>
-        <img class="modal-content" id="modalImage" alt="크게 보기">
-        <button class="modal-nav next-btn">&#10095;</button>
-    </div>
-    <!-- 갤러리 섹션 끝 -->
+        <button id="gallery-toggle-btn" class="gallery-btn" type="button">사진 더보기</button>
+    </section>
 
 
-    <!-- 5. 축의금 및 마음 전하실 곳 섹션 -->
+    <!-- ===================== 7. 마음 전하실 곳 ===================== -->
     <section id="gift-accounts">
-        <p class="section-title serif">Account</p>
-        <!-- <p class="gift-info-text">참석이 어려우신 분들을 위해 기재했습니다.<br>너그러운 마음으로 양해 부탁드립니다.</p> -->
-        
-        <!-- 신랑측 축의금 계좌 아코디언 -->
-        <button class="toggle-menu-btn serif" onclick="clickToggle('panel-groom')">
-            신랑측 마음 전하실 곳 <span id="arrow-panel-groom">▼</span>
-        </button>
-        <div id="panel-groom" class="toggle-panel">
-            <div class="account-details-row">
-                <div>신랑 구재관<br><b>국민 864401-01-384302</b></div>
-                <button class="btn-clipboard" onclick="copyClipboard('864401-01-384302')">복사</button>
-            </div>
-            <div class="account-details-row">
-                <div>혼주 구승근<br><b>새마을금고 6245-10-021240-2</b></div>
-                <button class="btn-clipboard" onclick="copyClipboard('6245-10-021240-2')">복사</button>
-            </div>
-            <div class="account-details-row">
-                <div>혼주 김정옥<br><b>농협 815811-52-134971</b></div>
-                <button class="btn-clipboard" onclick="copyClipboard('815811-52-134971')">복사</button>
+        <p class="section-title reveal">Account</p>
+
+        <p class="gift-info-text reveal" style="--reveal-delay:.06s">
+        </p>
+
+        <div class="account-group reveal" style="--reveal-delay:.1s">
+            <button class="toggle-menu-btn" type="button" data-panel="panel-groom" aria-expanded="false" aria-controls="panel-groom">
+                신랑측 마음 전하실 곳 <span class="chev" aria-hidden="true"></span>
+            </button>
+            <div id="panel-groom" class="toggle-panel">
+                <div class="account-details-row">
+                    <div>
+                        <p class="account-role">신랑 구재관</p>
+                        <p class="account-number"><span>국민</span>864401-01-384302</p>
+                    </div>
+                    <button class="btn-clipboard" type="button" data-copy="864401-01-384302">복사</button>
+                </div>
+                <div class="account-details-row">
+                    <div>
+                        <p class="account-role">혼주 구승근</p>
+                        <p class="account-number"><span>새마을금고</span>6245-10-021240-2</p>
+                    </div>
+                    <button class="btn-clipboard" type="button" data-copy="6245-10-021240-2">복사</button>
+                </div>
+                <div class="account-details-row">
+                    <div>
+                        <p class="account-role">혼주 김정옥</p>
+                        <p class="account-number"><span>농협</span>815811-52-134971</p>
+                    </div>
+                    <button class="btn-clipboard" type="button" data-copy="815811-52-134971">복사</button>
+                </div>
             </div>
         </div>
 
-        <!-- 신부측 축의금 계좌 아코디언 -->
-        <button class="toggle-menu-btn serif" onclick="clickToggle('panel-bride')">
-            신부측 마음 전하실 곳 <span id="arrow-panel-bride">▼</span>
-        </button>
-        <div id="panel-bride" class="toggle-panel">
-            <div class="account-details-row">
-                <div>신부 이채희<br><b>국민 410701-04-163448</b></div>
-                <button class="btn-clipboard" onclick="copyClipboard('410701-04-163448')">복사</button>
-            </div>
-            <div class="account-details-row">
-                <div>혼주 이은현<br><b>농협 794-02-197031</b></div>
-                <button class="btn-clipboard" onclick="copyClipboard('794-02-197031')">복사</button>
+        <div class="account-group reveal" style="--reveal-delay:.14s">
+            <button class="toggle-menu-btn" type="button" data-panel="panel-bride" aria-expanded="false" aria-controls="panel-bride">
+                신부측 마음 전하실 곳 <span class="chev" aria-hidden="true"></span>
+            </button>
+            <div id="panel-bride" class="toggle-panel">
+                <div class="account-details-row">
+                    <div>
+                        <p class="account-role">신부 이채희</p>
+                        <p class="account-number"><span>국민</span>410701-04-163448</p>
+                    </div>
+                    <button class="btn-clipboard" type="button" data-copy="410701-04-163448">복사</button>
+                </div>
+                <div class="account-details-row">
+                    <div>
+                        <p class="account-role">혼주 이은현</p>
+                        <p class="account-number"><span>농협</span>794-02-197031</p>
+                    </div>
+                    <button class="btn-clipboard" type="button" data-copy="794-02-197031">복사</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 하단 카피라이트 -->
+
+    <!-- ===================== 푸터 ===================== -->
     <footer>
-        <p>© 2026 Koo Jae Kwan & Lee Chae Hee.<br>All rights reserved.</p>
+        <p class="footer-names">Jaekwan &amp; Chaehee</p>
+        <button type="button" class="share-btn" id="share-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+            청첩장 링크 복사
+        </button>
+        <p class="footer-copy">© 2026 Koo Jae Kwan &amp; Lee Chae Hee.<br>All rights reserved.</p>
     </footer>
 
 </div>
 
 
-    <script src="script.js"></script>
-</body>
+<!-- ===================== 갤러리 라이트박스 ===================== -->
+<div id="galleryModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="사진 크게 보기">
+    <button class="modal-close" type="button" aria-label="닫기">&times;</button>
+    <button class="modal-nav prev-btn" type="button" aria-label="이전 사진">&#10094;</button>
+    <img class="modal-content" id="modalImage" alt="크게 보기">
+    <button class="modal-nav next-btn" type="button" aria-label="다음 사진">&#10095;</button>
+    <p class="modal-counter" id="modalCounter">1 / 16</p>
+</div>
 
+<script src="script.js"></script>
+</body>
 </html>
