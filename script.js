@@ -434,6 +434,25 @@
     }
   }
 
+
+  function preventDownload() {
+      // 이미지 우클릭 및 모바일 롱클릭 메뉴 방지
+      document.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG') {
+          e.preventDefault();
+        }
+      }, false);
+
+      // 이미지 드래그 방지
+      document.addEventListener('dragstart', function(e) {
+        if (e.target.tagName === 'IMG') {
+          e.preventDefault();
+        }
+      }, false);
+    }
+
+
+
   /* ------------------------------------------------------------------------
      실행
      ------------------------------------------------------------------------ */
@@ -445,6 +464,8 @@
     initShare();
     initMap();
 
+    preventDownload()
+    
     tickCountdown();
     setInterval(tickCountdown, 1000);
   }
