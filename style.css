@@ -1156,9 +1156,17 @@ footer::before {
 
 /* 모바일 청첩장 내 모든 이미지 저장/선택 방지 */
 img {
-  -webkit-touch-callout: none; /* iOS 롱클릭 다운로드 메뉴 차단 */
-  -webkit-user-select: none;   /* 텍스트/이미지 선택 방지 */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
   user-select: none;
-  -webkit-user-drag: none;     /* 드래그 방지 */
-  -webkit-tap-highlight-color: transparent; /* 터치시 반짝임 방지 */
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: none; /* 💡추가: 브라우저가 이미지 터치를 아예 인식하지 못하게 함 */
+}
+
+/* 💡추가: 이미지를 감싸는 배경 박스들에도 터치 메뉴 차단 속성 부여 */
+.gallery-item, .cover-img-box, .modal-content {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }

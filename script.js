@@ -273,8 +273,13 @@
     var grid = document.querySelector('.gallery-grid');
     if (grid) {
       grid.addEventListener('click', function (e) {
-        var img = e.target.closest('.gallery-item img');
+        // 💡변경: 클릭된 대상이 img가 아니라 부모인 .gallery-item이 되므로, 부모를 먼저 찾고 그 안의 img를 찾습니다.
+        var item = e.target.closest('.gallery-item');
+        if (!item) { return; }
+        
+        var img = item.querySelector('img');
         if (!img) { return; }
+        
         refreshLightbox();
         var i = images.indexOf(img);
         if (i > -1) { openModal(i); }
